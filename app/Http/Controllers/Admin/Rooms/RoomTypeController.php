@@ -9,6 +9,6 @@ class RoomTypeController extends Controller
 {
     public function index()
     {
-        return 'Hello World';
+        return inertia('Frontend/Admin/Rooms/CreateRoomType');
     }
 }
