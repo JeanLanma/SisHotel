@@ -13,7 +13,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <AppLayout title="Perfiles">
+    <AppLayout title="Habitaciones - Tipo de habitacion">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Crear nuevo tipo de habitación
