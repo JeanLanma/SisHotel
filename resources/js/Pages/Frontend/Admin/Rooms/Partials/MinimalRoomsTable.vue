@@ -1,4 +1,22 @@
 <script setup>
+const props = defineProps({
+    room_type: {
+        type: String,
+        default: '',
+    },
+    base_availability: {
+        type: Number,
+        default: 0,
+    },
+    starts_at: {
+        type: Number,
+        default: 1,
+    },
+})
+
+const parseRoomNumber = (roomNumber) => {
+    return props.starts_at + roomNumber
+}
 </script>
 
 <template>
@@ -21,14 +39,15 @@
           </tr>
         </thead>
         <tbody class="bg-gray-200">
-          <tr class="bg-white border-b-2 border-gray-200">
-            <td class="pl-4">
-              <span class="text-center ml-2 font-semibold">DBL</span>
+          <tr v-for="(availability, index) in props.base_availability" class="bg-white border-b-2 border-gray-200">
+
+            <td class="pl-4 bg-indigo-200">
+              <span class="text-center ml-2 font-semibold">{{props.room_type}}</span>
             </td>
            
-            <td class=" py-2">
+            <td class="">
               <span>
-                <input class="border-none w-full" type="text" name="DBL-1001" id="DBL-1001" value="1001">
+                <input class="border-none w-full" type="text" name="DBL-1001" id="DBL-1001" :value="parseRoomNumber((index + 1))">
               </span>
             </td>
 

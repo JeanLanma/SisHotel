@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('room', function (Blueprint $table) {
+        Schema::create('rooms', function (Blueprint $table) {
             $table->id();
 
             // Add relation to room_type
             $table->unsignedBigInteger('room_type_id');
-            $table->foreign('room_type_id')->references('id')->on('room_type')->onDelete('cascade');
+            $table->foreign('room_type_id')->references('id')->on('room_types')->onDelete('cascade');
 
             $table->string('room');
             $table->string('status');
@@ -34,9 +34,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('room', function (Blueprint $table) {
+        Schema::table('rooms', function (Blueprint $table) {
             $table->dropForeign(['room_type_id']);
         });
-        Schema::dropIfExists('room');
+        Schema::dropIfExists('rooms');
     }
 };

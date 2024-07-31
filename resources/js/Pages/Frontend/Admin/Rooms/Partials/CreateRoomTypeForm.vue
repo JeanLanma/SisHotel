@@ -22,7 +22,7 @@ const form = useForm({
     base_price: '',
     extra_adult_price: '',
     extra_kid_price: '',
-    base_availability: '',
+    base_availability: 0,
 });
 
 const updatePassword = () => {
@@ -207,7 +207,11 @@ const SubmitForm = () => {
 
             <!--  -->
             <div class="col-span-6 sm:col-span-4">
-                <MinimalRoomTable />
+                <MinimalRoomTable 
+                    :room_type="form.room_type" 
+                    :base_availability="Number(form.base_availability)"
+                    :starts_at="100"
+                    />
             </div>
         </template>
 
