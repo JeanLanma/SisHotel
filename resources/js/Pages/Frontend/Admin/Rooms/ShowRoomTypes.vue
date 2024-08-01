@@ -8,17 +8,24 @@ const props = defineProps({
     RoomTypes: Object,
 });
 
+const RoomTypeForm = useForm({
+    name: '',
+    room_type: '',
+    base_occupancy: '',
+    base_occupancy_kids: '',
+    base_price: '',
+    base_availability: 0,
+});
+
 const RoomTypeDefault = ref({
-    name: 'Habitación',
+    name: 'Nueva habitación',
     room_type: 'HAB',
     base_occupancy: '2',
     base_occupancy_kids: '2',
     base_price: '1000.00',
     base_availability: 1,
 })
-const RoomTypes = ref([
-    props.RoomTypes || RoomTypeDefault.value
-]);
+const RoomTypes = ref(props.RoomTypes.data || [RoomTypeDefault]);
 
 const addNewRoomType = () => {
     const newRoomType = ref({...RoomTypeDefault.value});
@@ -29,18 +36,31 @@ const saveRoomType = (roomType = null) => {
     if(roomType === null) {
         return;
     }
-    // console.log(RoomTypes.value);
-    // console.log(roomType);
+    submitForm(roomType);
 }
 
-const submitForm = () =>{ 
+const submitForm = ({name, room_type, base_occupancy, base_occupancy_kids, base_price, base_availability}) => {
+    
+    RoomTypeForm.name = name;
+    RoomTypeForm.room_type = room_type;
+    RoomTypeForm.base_occupancy = base_occupancy;
+    RoomTypeForm.base_occupancy_kids = base_occupancy_kids;
+    RoomTypeForm.base_price = base_price;
+    RoomTypeForm.base_availability = base_availability;
 
+    RoomTypeForm.post(route('admin.rooms.room-types.store'), {
+        errorBag: 'createRoomType',
+        preserveScroll: true,
+        onSuccess: () => {
+            RoomTypeForm.reset()
+        },
+        onError: () => {
+            alert('Error al guardar el tipo de habitación');
+            console.log(RoomTypeForm.errors);
+        }
+    });
 }
 
-const Integer = (value) => {
-    return parseInt(value);
-}
-// console.log(RoomTypes.value);
 </script>
 
 <template>
@@ -75,7 +95,7 @@ const Integer = (value) => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="roomType in RoomTypes" class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                            <tr v-for="roomType in RoomTypes" class="bg-white lg:hover:bg-indigo-50 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
                                 <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
                                     <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Nombre</span>
                                     <TextInput

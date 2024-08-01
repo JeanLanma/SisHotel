@@ -86,7 +86,7 @@ const SubmitForm = () => {
                     id="room_type"
                     v-model="form.room_type"
                     type="text"
-                    class="mt-1 block w-full"
+                    class="mt-1 block w-full font-bold"
                     autocomplete="room-type"
                 />
                 <InputError :message="form.errors.name" class="mt-2" />

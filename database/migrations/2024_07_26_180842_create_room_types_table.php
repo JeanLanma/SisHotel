@@ -18,13 +18,14 @@ return new class extends Migration
             $table->string('room_type');
             $table->string('description')->nullable();
             $table->integer('base_occupancy');
-            $table->integer('max_occupancy');
-            $table->integer('base_occupancy_kid');
-            $table->integer('max_occupancy_kid');
+            $table->integer('max_occupancy')->nullable();
+            $table->integer('base_occupancy_kids');
+            $table->integer('max_occupancy_kids')->nullable();
             $table->integer('base_price');
-            $table->integer('extra_adult_price');
-            $table->integer('extra_kid_price');
+            $table->integer('extra_adult_price')->nullable();
+            $table->integer('extra_kid_price')->nullable();
             $table->integer('base_availability');
+            $table->string('status')->default('ok');
 
             $table->timestamps();
         });
