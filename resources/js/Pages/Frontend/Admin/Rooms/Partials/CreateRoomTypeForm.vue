@@ -16,7 +16,6 @@ const props = defineProps({
 });
 
 const passwordInput = ref(null);
-console.log(props.RoomType);
 
 const form = useForm({
     id: props.RoomType?.id,
@@ -32,7 +31,6 @@ const form = useForm({
     extra_kid_price: props.RoomType?.extra_kid_price || '',
     base_availability: props.RoomType?.base_availability || 0,
 });
-console.log(form);
 
 const updatePassword = () => {
     form.put(route('user-password.update'), {
@@ -232,6 +230,7 @@ const Delete = () => {
                     id="base_availability"
                     v-model="form.base_availability"
                     type="number"
+                    min="0"
                     class="mt-1 block w-full"
                     autocomplete="base-availability"
                 />
@@ -241,7 +240,7 @@ const Delete = () => {
             <!--  -->
             <div class="col-span-6 sm:col-span-4">
                 <MinimalRoomTable 
-                    :room_type="form.room_type" 
+                    :room_type="form.id" 
                     :base_availability="Number(form.base_availability)"
                     :starts_at="100"
                     />

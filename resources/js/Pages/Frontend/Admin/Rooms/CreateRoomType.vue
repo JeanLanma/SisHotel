@@ -35,7 +35,7 @@ const RoomType = ref(props.RoomType.data || RoomTypeDefault);
     <AppLayout title="Habitaciones - Tipo de habitacion">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{RoomType?.id ? 'Crear' : 'Editar' }} nuevo tipo de habitación
+                {{ RoomType?.id ? 'Editar' : 'Crear' }} nuevo tipo de habitación
             </h2>
         </template>
 

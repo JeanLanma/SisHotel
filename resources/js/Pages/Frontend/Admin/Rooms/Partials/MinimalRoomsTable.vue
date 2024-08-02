@@ -1,7 +1,18 @@
 <script setup>
+import InfoButton from '@/Components/InfoButton.vue';
+import { useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
+const RoomsForm = useForm([{
+    room_type_id: '',
+    room: 0,
+    status: 1,
+}]);
+
+const Rooms = ref([]);
+const areRoomsLoaded = ref(false);
+
 const props = defineProps({
     room_type: {
-        type: String,
         default: '',
     },
     base_availability: {
@@ -17,6 +28,41 @@ const props = defineProps({
 const parseRoomNumber = (roomNumber) => {
     return props.starts_at + roomNumber
 }
+const addNewRoom = () => {
+    Rooms.value.push({
+        room_type_id: props.room_type,
+        room: Rooms.value.length + 1,
+        status: 1,
+    });
+}
+
+function getRoomsByType(type) {
+    return axios.get(`/admin/rooms/api/rooms/${type}`)
+        .then(response => {
+            console.log(response.data);
+            return response.data;
+        })
+        .catch(error => {
+            console.error(error);
+            alert('Error al cargar las habitaciones');
+        });
+}
+async function Dev() {
+    Rooms.value = await getRoomsByType(props.room_type);
+    Rooms.value = Rooms.value.data;
+    console.log(Rooms.value);
+} 
+const SaveRooms = () => {
+    RoomsForm.post(route('admin.rooms.room-types.store'), {
+        errorBag: 'RoomsForm',
+        preserveScroll: true,
+        onSuccess: (data) => {
+            RoomsForm.reset()
+            // ToastSuccess('Cambios guardados');
+        },
+    });
+}
+getRoomsByType(props.room_type);
 </script>
 
 <template>
@@ -29,8 +75,10 @@ const parseRoomNumber = (roomNumber) => {
               <span class="text-gray-100 font-semibold">Clave</span>
             </th>
           
-            <th class="py-2">
+            <th class="py-2 flex items-center justify-between">
               <span class="text-gray-100 font-semibold">Habitación</span>
+              <InfoButton :type="'button'" class="">Guardar</InfoButton>
+              <InfoButton @click="Dev" :type="'button'" class="mr-2">Actualizar</InfoButton>
             </th>
 
             <th class="px-16 py-2 hidden">
@@ -39,7 +87,7 @@ const parseRoomNumber = (roomNumber) => {
           </tr>
         </thead>
         <tbody class="bg-gray-200">
-          <tr v-for="(availability, index) in props.base_availability" class="bg-white border-b-2 border-gray-200">
+          <tr v-if="areRoomsLoaded && Rooms.length > 0" v-for="(availability, index) in Rooms" class="bg-white border-b-2 border-gray-200">
 
             <td class="pl-4 bg-indigo-200">
               <span class="text-center ml-2 font-semibold">{{props.room_type}}</span>
@@ -81,6 +129,14 @@ const parseRoomNumber = (roomNumber) => {
                                                 />
                                             </svg>
               </span>
+            </td>
+          </tr>
+          <tr v-else>
+            <td class="pl-4 bg-indigo-200">
+              <span class="text-center ml-2 font-semibold">{{props.room_type}}</span>
+            </td>
+            <td class="px-16 py-2">
+              <span class="text-center ml-2 font-semibold">Cargando habitaciones...</span>
             </td>
           </tr>
         </tbody>
