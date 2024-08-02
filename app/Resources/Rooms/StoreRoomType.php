@@ -28,6 +28,11 @@ class StoreRoomType {
 
     public static function FromRequest($request)
     {
-        return RoomType::create($request->all()) ? true : false;
+        $roomType = RoomType::where('id', $request->id)->first();
+        $data = array_filter($request->all());
+        if ($roomType) {
+            return $roomType->update($data) ? true : false;
+        }
+        return RoomType::create($data) ? true : false;
     }
 }

@@ -5,25 +5,34 @@ import ActionMessage from '@/Components/ActionMessage.vue';
 import FormSection from '@/Components/FormSection.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue'; 
+import DangerButton from '@/Components/DangerButton.vue'; 
 import TextInput from '@/Components/TextInput.vue';
+import { router } from '@inertiajs/vue3'
 import MinimalRoomTable from '@/Pages/Frontend/Admin/Rooms/Partials/MinimalRoomsTable.vue';
 
+const props = defineProps({
+    RoomType: Object,
+});
+
 const passwordInput = ref(null);
+console.log(props.RoomType);
 
 const form = useForm({
-    name: '',
-    room_type: '',
-    description: '',
-    base_occupancy: '',
-    max_occupancy: '',
-    base_occupancy_kid: '',
-    max_occupancy_kid: '',
-    base_price: '',
-    extra_adult_price: '',
-    extra_kid_price: '',
-    base_availability: 0,
+    id: props.RoomType?.id,
+    name: props.RoomType?.name || '',
+    room_type: props.RoomType?.room_type || '',
+    description: props.RoomType?.description || '',
+    base_occupancy: props.RoomType?.base_occupancy || '',
+    max_occupancy: props.RoomType?.max_occupancy || '',
+    base_occupancy_kids: props.RoomType?.base_occupancy_kids || '',
+    max_occupancy_kids: props.RoomType?.max_occupancy_kids || '',
+    base_price: props.RoomType?.base_price || '',
+    extra_adult_price: props.RoomType?.extra_adult_price || '',
+    extra_kid_price: props.RoomType?.extra_kid_price || '',
+    base_availability: props.RoomType?.base_availability || 0,
 });
+console.log(form);
 
 const updatePassword = () => {
     form.put(route('user-password.update'), {
@@ -47,19 +56,43 @@ const updatePassword = () => {
 const SubmitForm = () => {
 
     alert('Form submitted');
-    return console.log(form);
-    form.post(route('room-types.store'), {
+    form.post(route('admin.rooms.room-types.store'), {
         errorBag: 'createRoomType',
         preserveScroll: true,
-        onSuccess: () => form.reset(),
+        onSuccess: () => {
+            RoomTypeForm.reset()
+        },
+        onError: () => {
+            alert('Error al guardar el tipo de habitación');
+            console.log(RoomTypeForm.errors);
+        }
     });
+}
+
+const Delete = () => {
+    if(confirm('¿Estás seguro de eliminar este tipo de habitación?')) {
+        form.delete(route('admin.rooms.room-types.destroy', form.id), {
+            errorBag: 'deleteRoomType',
+            preserveScroll: true,
+            onSuccess: () => {
+                alert('Tipo de habitación eliminado');
+                router.visit('admin.rooms.room-types.index')
+            },
+            onError: () => {
+                alert('Error al eliminar el tipo de habitación');
+                console.log(RoomTypeForm.errors);
+            }
+        });
+    } else {
+        alert('Operación cancelada');
+    }
 }
 </script>
 
 <template>
     <FormSection @submitted="SubmitForm">
         <template #title>
-            Nuevo tipo de habitación
+            {{RoomType?.id ? 'Nuevo' : 'Modificando'}} tipo de habitación
         </template>
 
         <template #description>
@@ -133,26 +166,26 @@ const SubmitForm = () => {
 
             <div class="col-span-4 grid grid-cols-6 gap-6">
                 <div class="col-span-6 sm:col-span-3">
-                    <InputLabel for="base_occupancy_kid" value="Ocupación base niños" />
+                    <InputLabel for="base_occupancy_kids" value="Ocupación base niños" />
                     <TextInput
-                        id="base_occupancy_kid"
-                        v-model="form.base_occupancy_kid"
+                        id="base_occupancy_kids"
+                        v-model="form.base_occupancy_kids"
                         type="number"
                         class="mt-1 block w-full"
                         autocomplete="base-occupancy-kid"
                     />
-                    <InputError :message="form.errors.base_occupancy_kid" class="mt-2" />
+                    <InputError :message="form.errors.base_occupancy_kids" class="mt-2" />
                 </div>
                 <div class="col-span-6 sm:col-span-3">
-                    <InputLabel for="max_occupancy_kid" value="Ocupación maxima niños" />
+                    <InputLabel for="max_occupancy_kids" value="Ocupación maxima niños" />
                     <TextInput
-                        id="max_occupancy_kid"
-                        v-model="form.max_occupancy_kid"
+                        id="max_occupancy_kids"
+                        v-model="form.max_occupancy_kids"
                         type="number"
                         class="mt-1 block w-full"
-                        autocomplete="base-occupancy-kid"
+                        autocomplete="base-occupancy-kids"
                     />
-                    <InputError :message="form.errors.max_occupancy_kid" class="mt-2" />
+                    <InputError :message="form.errors.max_occupancy_kids" class="mt-2" />
                 </div>
             </div>
 
@@ -219,6 +252,10 @@ const SubmitForm = () => {
             <ActionMessage :on="form.recentlySuccessful" class="me-3">
                 Guardado.
             </ActionMessage>
+
+            <DangerButton @click="Delete" :class="{ 'opacity-25': form.processing }" class="mr-24" :disabled="form.processing">
+                ELIMINAR
+            </DangerButton>
 
             <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                 Guardar

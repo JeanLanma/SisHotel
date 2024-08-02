@@ -3,12 +3,15 @@ import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import TextInput from '@/Components/TextInput.vue';
+import { ToastSuccess } from '@/Shared/Toast.js'
 
 const props = defineProps({
     RoomTypes: Object,
 });
+console.log(props.RoomTypes.data);
 
 const RoomTypeForm = useForm({
+    id: null,
     name: '',
     room_type: '',
     base_occupancy: '',
@@ -39,8 +42,9 @@ const saveRoomType = (roomType = null) => {
     submitForm(roomType);
 }
 
-const submitForm = ({name, room_type, base_occupancy, base_occupancy_kids, base_price, base_availability}) => {
-    
+const submitForm = ({id, name, room_type, base_occupancy, base_occupancy_kids, base_price, base_availability}) => {
+
+    RoomTypeForm.id = id;
     RoomTypeForm.name = name;
     RoomTypeForm.room_type = room_type;
     RoomTypeForm.base_occupancy = base_occupancy;
@@ -53,6 +57,7 @@ const submitForm = ({name, room_type, base_occupancy, base_occupancy_kids, base_
         preserveScroll: true,
         onSuccess: () => {
             RoomTypeForm.reset()
+            ToastSuccess('Cambios guardados');
         },
         onError: () => {
             alert('Error al guardar el tipo de habitación');
@@ -158,7 +163,7 @@ const submitForm = ({name, room_type, base_occupancy, base_occupancy_kids, base_
                                 <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
                                     <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Actions</span>
                                     <a @click="saveRoomType(roomType)" href="#" class="text-blue-400 hover:text-blue-600 underline">Guardar</a>
-                                    <a href="#" class="text-blue-400 hover:text-blue-600 underline pl-6">Ver</a>
+                                    <a :href="roomType?.id ? route('admin.rooms.room-types.edit', {roomType}) : '#'" class="text-blue-400 hover:text-blue-600 underline pl-6">Ver</a>
                                 </td>
                             </tr>
                         </tbody>

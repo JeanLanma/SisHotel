@@ -15,6 +15,11 @@ class GetRoomTypes {
         return RoomType::paginate($limit);
     }
 
+    public static function GetType($id)
+    {
+        return RoomType::find($id);
+    }
+
     public static function useCollectionFilters($filters)
     {
         if($filters == null) return [];
