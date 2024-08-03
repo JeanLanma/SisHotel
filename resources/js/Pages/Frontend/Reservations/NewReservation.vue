@@ -3,6 +3,15 @@ import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 
+// DatePicker
+import AirDatepicker from 'air-datepicker';
+import localeEn from 'air-datepicker/locale/en';
+
+new AirDatepicker('#checkin', {
+    locale: localeEn
+});
+
+const checkin = ref(null);
 const firstname = ref('');
 const lastname = ref('');
 const email = ref('');
@@ -38,7 +47,7 @@ const submit = () => {
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 
-                <div>
+                <div id="checkin" :ref="checkin">
 
                 </div>
 
@@ -46,9 +55,13 @@ const submit = () => {
                     <!--  -->
                     <v-form v-model="valid">
                         <v-container>
-                            <v-row>
-                                <v-date-picker show-adjacent-months></v-date-picker>
+                                
+                            <v-row class="my-4">
+                                <v-btn>
+                                    Check In
+                                </v-btn>
                             </v-row>
+
                             <v-row>
                                 <v-col
                                     cols="12"
