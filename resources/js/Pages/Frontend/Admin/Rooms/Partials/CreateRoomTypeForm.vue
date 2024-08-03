@@ -242,7 +242,7 @@ const Delete = () => {
                 <MinimalRoomTable 
                     :room_type="form.id" 
                     :base_availability="Number(form.base_availability)"
-                    :starts_at="100"
+                    :RoomType="form.room_type"
                     />
             </div>
         </template>
