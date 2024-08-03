@@ -1,17 +1,17 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 
-// DatePicker
-import AirDatepicker from 'air-datepicker';
-import localeEn from 'air-datepicker/locale/en';
+// Utils+
+// returns date in format YYYY-MM-DD
+const parseDate = (date) => {
+    return date.toISOString().split('T')[0];
+}
 
-new AirDatepicker('#checkin', {
-    locale: localeEn
-});
-
-const checkin = ref(null);
+const checkin = ref(new Date());
+// day afeter checkin
+const checkout = ref(new Date(checkin.value.getTime() + 24 * 60 * 60 * 1000));
 const firstname = ref('');
 const lastname = ref('');
 const email = ref('');
@@ -34,6 +34,9 @@ const submit = () => {
     }
 };
 
+watch(checkin, (value) => {
+    console.log(value);
+});
 </script>
 
 <template>
@@ -46,10 +49,6 @@ const submit = () => {
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                
-                <div id="checkin" :ref="checkin">
-
-                </div>
 
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg w-full h-full">
                     <!--  -->
@@ -57,9 +56,65 @@ const submit = () => {
                         <v-container>
                                 
                             <v-row class="my-4">
-                                <v-btn>
-                                    Check In
-                                </v-btn>
+                                    <!-- Checkin -->
+                                    <v-dialog max-width="500">
+                                        <template v-slot:activator="{ props: activatorProps }">
+                                            <v-btn
+                                                v-bind="activatorProps"
+                                                text="Check In"
+                                            ></v-btn>
+                                        </template>
+
+                                        <template v-slot:default="{ isActive }">
+                                            <v-card title="Seleccionar Check In">
+                                            <v-card-text>
+                                                <v-date-picker v-model:model-value="checkin"></v-date-picker>
+                                            </v-card-text>
+
+                                            <v-card-actions>
+                                                <v-spacer></v-spacer>
+
+                                                <v-btn
+                                                text="Aceptar"
+                                                @click="isActive.value = false"
+                                                ></v-btn>
+                                            </v-card-actions>
+                                            </v-card>
+                                        </template>
+                                    </v-dialog>
+                                    <v-chip>
+                                        {{ parseDate(checkin) }}
+                                    </v-chip>
+                                    <!--  -->
+                                    <!-- checkout -->
+                                    <v-dialog max-width="500">
+                                        <template v-slot:activator="{ props: activatorProps }">
+                                            <v-btn
+                                                v-bind="activatorProps"
+                                                text="Check Out"
+                                            ></v-btn>
+                                        </template>
+
+                                        <template v-slot:default="{ isActive }">
+                                            <v-card title="Seleccionar Check Out">
+                                            <v-card-text>
+                                                <v-date-picker v-model:model-value="checkout"></v-date-picker>
+                                            </v-card-text>
+
+                                            <v-card-actions>
+                                                <v-spacer></v-spacer>
+
+                                                <v-btn
+                                                text="Aceptar"
+                                                @click="isActive.value = false"
+                                                ></v-btn>
+                                            </v-card-actions>
+                                            </v-card>
+                                        </template>
+                                    </v-dialog>
+                                    <p class="">parseDate(checkout)</p>
+                        
+                                    <!--  -->
                             </v-row>
 
                             <v-row>
