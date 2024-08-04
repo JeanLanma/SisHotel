@@ -9,6 +9,6 @@ class NewReservationController extends Controller
 {
     public function index()
     {
-        return inertia('Reservations/NewReservation');
+        return inertia('Frontend/Reservations/NewReservation');
     }
 }

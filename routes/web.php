@@ -46,5 +46,5 @@ Route::middleware([
         Route::delete('/rooms/{room}', [App\Http\Controllers\Admin\Rooms\RoomsController::class, 'destroy'])->name('admin.rooms.rooms.destroy');
     });
     #Reservations
-    Route::get('/reservation/new', [App\Http\Controllers\Reservations\ReservationsController::class, 'index'])->name('admin.reservations.index');
+    Route::get('/reservations/new', [App\Http\Controllers\Reservations\NewReservationController::class, 'index'])->name('admin.reservations.index');
 });
