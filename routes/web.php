@@ -4,6 +4,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+use App\Http\Controllers\Calendar\CalendarController;
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -47,4 +49,7 @@ Route::middleware([
     });
     #Reservations
     Route::get('/reservations/new', [App\Http\Controllers\Reservations\NewReservationController::class, 'index'])->name('admin.reservations.index');
+
+    #Calendar
+    Route::get('calendar/{from_date?}/{to_date?}', [CalendarController::class, 'index'])->name('calendar.index');
 });
