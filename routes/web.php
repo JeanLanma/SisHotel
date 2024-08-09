@@ -52,4 +52,5 @@ Route::middleware([
 
     #Calendar
     Route::get('calendar/{from_date?}/{to_date?}', [CalendarController::class, 'index'])->name('calendar.index');
+    Route::get('calendar/{from_date?}/{to_date?}/store', [CalendarController::class, 'store'])->name('calendar.store');
 });

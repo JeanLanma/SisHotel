@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Calendar;
 
 use App\Http\Controllers\Controller;
+use App\Resources\Calendar\GetDates;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -10,6 +11,17 @@ class CalendarController extends Controller
 {
     
     public function index($from_date = null, $to_date = null)
+    {
+        // return response()->json([
+        //     'message' => GetDates::getCollection($from_date, $to_date),
+        // ]);
+        return inertia('Frontend/Calendar/IndexCalendar', [
+            'from_date' => $from_date,
+            'to_date' => $to_date,
+            'Dates' => GetDates::getCollection($from_date, $to_date),
+        ]);
+    }
+    public function store($from_date = null, $to_date = null)
     {
         // Check if from_date is a valid date
         $ValidateDates = $this->validateDatesResponse($from_date, $to_date);
