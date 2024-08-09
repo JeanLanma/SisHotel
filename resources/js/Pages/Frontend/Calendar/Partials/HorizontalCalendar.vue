@@ -1,6 +1,8 @@
 <script setup>
 import Logger from '@/Helpers/Logger';
+import { ref } from 'vue';
 
+const date = ref(new Date());
 
 const props = defineProps({
     Dates: Array,
@@ -11,15 +13,25 @@ const props = defineProps({
 <template>
     <div  class='flex bg-white shadow-md justify-start md:justify-center rounded-lg overflow-x-scroll mx-auto py-4 px-2'>
         
+        <!-- VCalendar -->
+        <VDatePicker 
+            v-model="date" 
+            view="weekly" 
+            expanded
+            :columns="2"
+            />
+
+        <!-- /VCalendar -->
+
         <!-- Regular days -->
-        <div v-for="(date, index) in props.Dates" :key="index" class='flex group border border-purple-500 hover:bg-purple-500 hover:shadow-lg hover-dark-shadow rounded-lg mx-1 transition-all	duration-300	 cursor-pointer justify-center w-16'>
+        <!-- <div v-for="(date, index) in props.Dates" :key="index" class='flex group border border-purple-500 hover:bg-purple-500 hover:shadow-lg hover-dark-shadow rounded-lg mx-1 transition-all	duration-300	 cursor-pointer justify-center w-16'>
             <div class='flex items-center px-4 py-4'>
                 <div class='text-center'>
                    <p class='text-gray-900 group-hover:text-gray-100 text-sm transition-all	duration-300'> {{ date.day_name.substring(0,3) + '.' }} </p>
                    <p class='text-gray-900 group-hover:text-gray-100 mt-3 group-hover:font-bold transition-all	duration-300'> {{ date.day }} </p>
                 </div>
             </div>
-        </div>
+        </div> -->
        <!-- /Regular days -->
 
         <!-- Marked day -->

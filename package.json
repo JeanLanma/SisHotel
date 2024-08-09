@@ -19,6 +19,8 @@
         "vue": "^3.3.13"
     },
     "dependencies": {
-        "sweetalert2": "^11.12.4"
+        "@popperjs/core": "^2.11.8",
+        "sweetalert2": "^11.12.4",
+        "v-calendar": "^3.1.2"
     }
 }
