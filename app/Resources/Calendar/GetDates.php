@@ -10,7 +10,9 @@ class GetDates
     {
         $from_date = $from_date ?? date('Y-m-d');
         $to_date = $to_date ?? date('Y-m-d', strtotime('+1 day'));
-        return Calendar::limit($limit)->get();
+        return Calendar::where('day', '>=', $from_date)
+            ->where('day', '<=', $to_date)
+            ->limit($limit)->get();
     }
     public function getDates($from_date, $to_date)
     {

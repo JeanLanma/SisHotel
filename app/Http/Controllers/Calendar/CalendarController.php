@@ -16,6 +16,8 @@ class CalendarController extends Controller
         // return response()->json([
         //     'message' => GetRooms::GetCollectionGroupedBy(),
         // ]);
+        $from_date = $from_date ?? date('Y-m-d');
+        $to_date = $to_date ?? date('Y-m-d', strtotime('30 days'));
         return inertia('Frontend/Calendar/IndexCalendar', [
             'from_date' => $from_date,
             'to_date' => $to_date,
