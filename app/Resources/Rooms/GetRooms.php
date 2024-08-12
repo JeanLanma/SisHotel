@@ -15,6 +15,15 @@ class GetRooms {
             return Room::paginate($limit);
         }
     
+        public static function GetCollectionGroupedBy($GroupBy = 'Roomtype.room_type')
+        {
+            return Room::with(['RoomType' => function($query)
+            {
+                $query->select(['id', 'name', 'room_type', 'status']);
+            }])
+            ->get(['id', 'room_type_id', 'room', 'status', 'cleaning_status', 'pax', 'ext_number', 'cleaning_time'])
+            ->groupBy($GroupBy);    
+        }
         public static function GetRoom($id)
         {
             return Room::find($id);

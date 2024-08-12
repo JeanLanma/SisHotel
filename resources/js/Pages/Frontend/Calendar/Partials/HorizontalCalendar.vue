@@ -6,48 +6,63 @@ const date = ref(new Date());
 
 const props = defineProps({
     Dates: Array,
+    Rooms: Array | Object,
 });
 
+Logger('HorizontalCalendar Rooms', props.Rooms);
 </script>
 
 <template>
     <div  class='flex bg-white shadow-md justify-start md:justify-center rounded-lg overflow-x-scroll mx-auto py-4 px-2'>
-        
-        <!-- VCalendar -->
-        <VDatePicker 
-            v-model="date" 
-            view="weekly" 
-            expanded
-            :columns="2"
-            />
-
-        <!-- /VCalendar -->
-
-        <!-- Regular days -->
-        <!-- <div v-for="(date, index) in props.Dates" :key="index" class='flex group border border-purple-500 hover:bg-purple-500 hover:shadow-lg hover-dark-shadow rounded-lg mx-1 transition-all	duration-300	 cursor-pointer justify-center w-16'>
-            <div class='flex items-center px-4 py-4'>
-                <div class='text-center'>
-                   <p class='text-gray-900 group-hover:text-gray-100 text-sm transition-all	duration-300'> {{ date.day_name.substring(0,3) + '.' }} </p>
-                   <p class='text-gray-900 group-hover:text-gray-100 mt-3 group-hover:font-bold transition-all	duration-300'> {{ date.day }} </p>
-                </div>
-            </div>
-        </div> -->
-       <!-- /Regular days -->
-
-        <!-- Marked day -->
-        <div class='hidden flex group bg-purple-600 shadow-lg dark-shadow rounded-lg mx-1 cursor-pointer justify-center relative  w-16'>
-          <span class="flex h-3 w-3 absolute -top-1 -right-1">
-            <span class="animate-ping absolute group-hover:opacity-75 opacity-0 inline-flex h-full w-full rounded-full bg-purple-400 "></span>
-            <span class="relative inline-flex rounded-full h-3 w-3 bg-purple-100"></span>
-          </span>
-            <div class='flex items-center px-4 py-4'>
-                <div class='text-center'>
-                   <p class='text-gray-100 text-sm'> Wed </p>
-                   <p class='text-gray-100  mt-3 font-bold'> 14 </p>
-                </div>
-            </div>
-        </div>
-        <!-- /Marked day -->
       
+        <div class="w-full">
+
+            <div>
+                <table class="border-collapse w-full">
+                    <thead>
+                        <tr class="flex overflow-hidden">
+                            <th class="text-center py-3 bg-gray-200 border border-gray-300">
+                                <div class="w-12 text-sm font-semibold text-gray-800">
+                                    <p>{{ props.Dates[0].day_name }}</p>
+                                </div>
+                            </th>
+                            
+                            <th v-for="date in props.Dates" class="text-center py-3 bg-gray-200 border border-gray-300">
+                                <div class="w-12 text-sm font-semibold text-gray-800">
+                                    <p>{{ date.day_name.substring(0,3) }}</p>
+                                    <p>{{ date.day }}</p>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+                <table v-for="(RoomType, key, index) in props.Rooms" :key="index" class="border-collapse">
+                    <thead>
+                        <tr>
+                            <th class="text-center py-2 bg-gray-200 border border-gray-300">
+                                {{ key }}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="room in RoomType" class="flex overflow-hidden">
+                            <td class="text-center py-2 border border-gray-300">
+                                <div class="w-12 text-sm font-semibold text-gray-800">
+                                    <p>{{ room.room }}</p>
+                                </div>
+                            </td>
+                            <td v-for="date in props.Dates" class="text-center py-2 border border-gray-300">
+                                <div class="w-12 text-sm font-semibold text-gray-800">
+                                    <p></p>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+
     </div>
 </template>

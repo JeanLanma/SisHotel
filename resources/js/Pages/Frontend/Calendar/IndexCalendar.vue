@@ -5,10 +5,11 @@ import Logger from '@/Helpers/Logger';
 
 const props = defineProps({
     Dates: Object,
+    Rooms: Array | Object,
 });
 
 Logger('Fechas de la base datos',   props.Dates);
-
+Logger('Habitaciones de la base datos',   props.Rooms);
 </script>
 
 <template>
@@ -23,7 +24,10 @@ Logger('Fechas de la base datos',   props.Dates);
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
 
-                    <HorizontalCalendar :Dates="props.Dates" />
+                    <HorizontalCalendar 
+                        :Dates="props.Dates"
+                        :Rooms="props.Rooms"
+                        />
 
                 </div>
             </div>

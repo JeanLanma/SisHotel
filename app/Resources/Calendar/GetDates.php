@@ -6,11 +6,11 @@ use App\Models\Calendar\Calendar;
 
 class GetDates
 {
-    public static function getCollection($from_date = null, $to_date = null)
+    public static function getCollection($from_date = null, $to_date = null, $limit = 15)
     {
         $from_date = $from_date ?? date('Y-m-d');
         $to_date = $to_date ?? date('Y-m-d', strtotime('+1 day'));
-        return Calendar::limit(15)->get();
+        return Calendar::limit($limit)->get();
     }
     public function getDates($from_date, $to_date)
     {
