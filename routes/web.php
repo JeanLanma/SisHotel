@@ -48,7 +48,8 @@ Route::middleware([
         Route::delete('/rooms/{room}', [App\Http\Controllers\Admin\Rooms\RoomsController::class, 'destroy'])->name('admin.rooms.rooms.destroy');
     });
     #Reservations
-    Route::get('/reservations/new', [App\Http\Controllers\Reservations\NewReservationController::class, 'index'])->name('admin.reservations.index');
+    Route::get('/reservations/', [App\Http\Controllers\Reservations\NewReservationController::class, 'index'])->name('admin.reservations.index');
+    Route::get('/reservations/new', [App\Http\Controllers\Reservations\NewReservationController::class, 'create'])->name('admin.reservations.create');
     Route::post('/reservations/new', [App\Http\Controllers\Reservations\NewReservationController::class, 'store'])->name('admin.reservations.store');
 
     #Calendar

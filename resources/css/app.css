@@ -5,7 +5,11 @@
 [x-cloak] {
     display: none;
 }
-
+@layer utilities {
+    .shadow-select {
+        box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
+    }
+}
 @layer base {
     .colored-toast.swal2-icon-success {
         background-color: #a5dc86 !important;

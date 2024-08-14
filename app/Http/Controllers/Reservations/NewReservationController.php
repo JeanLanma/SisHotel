@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Reservations;
 
 use App\Http\Controllers\Controller;
+use App\Resources\Reservations\GetReservations;
 use App\Resources\Reservations\StoreReservation;
 use App\Resources\Rooms\GetRoomTypes;
 use Illuminate\Http\Request;
@@ -10,6 +11,12 @@ use Illuminate\Http\Request;
 class NewReservationController extends Controller
 {
     public function index()
+    {
+        return inertia('Frontend/Reservations/IndexReservations', [
+            'UpcomingReservations' => GetReservations::GetUpcomingReservations(15)
+        ]);
+    }
+    public function create()
     {
         return inertia('Frontend/Reservations/NewReservation', [
             'RoomTypes' => GetRoomTypes::GetCollection(15)
