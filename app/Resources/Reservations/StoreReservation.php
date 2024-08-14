@@ -3,12 +3,16 @@
 namespace App\Resources\Reservations;
 
 use App\Models\Reservation\Reservation;
+use App\Resources\Guests\StoreGuests;
 
 class StoreReservation
 {
     public static function FromRequest($request)
     {
         $lastReservation = Reservation::latest()->first();
+
+        $guests = StoreGuests::FromReservationRequest($request);
+
         $reservation = Reservation::create([
             'serie' => $request->serie ?? 'A',
             'folio' => $request->folio ?? isset($lastReservation->folio) ? $lastReservation->folio + 1 : 1,
@@ -30,7 +34,7 @@ class StoreReservation
             'room_id' => $request->room_id,
             'user_id' => request()->user()->id,
             'shift' => null,
-            'guests_id' => null,
+            'guests_id' => $guests,
             'tax_free_account' => $request->tax_free_account ?? false,
             'total' => $request->total ?? false,
             'mail_sent' => 0,
