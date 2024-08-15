@@ -22,13 +22,19 @@ class NewReservationController extends Controller
             'RoomTypes' => GetRoomTypes::GetCollection(15)
         ]);
     }
-
     public function store(Request $request)
     {
         return redirect()->back()->with([
             'message' => 'Reservación creada correctamente',
             'reservation' => $request->all(),
             'data' => StoreReservation::FromRequest($request)
+        ]);
+    }
+    public function show($reservation)
+    {
+        return inertia('Frontend/Reservations/ShowReservation', [
+            'reservation' => GetReservations::GetReservation($reservation),
+            'RoomTypes' => GetRoomTypes::GetCollection(15)
         ]);
     }
 }

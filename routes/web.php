@@ -51,6 +51,7 @@ Route::middleware([
     Route::get('/reservations/', [App\Http\Controllers\Reservations\NewReservationController::class, 'index'])->name('admin.reservations.index');
     Route::get('/reservations/new', [App\Http\Controllers\Reservations\NewReservationController::class, 'create'])->name('admin.reservations.create');
     Route::post('/reservations/new', [App\Http\Controllers\Reservations\NewReservationController::class, 'store'])->name('admin.reservations.store');
+    Route::get('/reservations/show/{$reservation}', [App\Http\Controllers\Reservations\NewReservationController::class, 'show'])->name('admin.reservations.show');
 
     #Calendar
     Route::get('calendar/{from_date?}/{to_date?}', [CalendarController::class, 'index'])->name('calendar.index');

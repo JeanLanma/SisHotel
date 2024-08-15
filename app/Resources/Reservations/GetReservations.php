@@ -21,4 +21,8 @@ class GetReservations
                                 },
                             ])->where('checkin', '>=', now())->orderBy('checkin', 'asc')->paginate($limit);
     }
+    public static function GetReservation($id)
+    {
+        return Reservation::with('roomType')->find($id);
+    }
 }
