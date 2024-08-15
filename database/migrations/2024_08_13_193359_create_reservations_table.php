@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
 
             $table->string('serie')->default('A');
-            $table->string('folio')->nullable();
+            $table->string('folio')->default(null)->nullable();
             $table->string('guests_name');
             $table->dateTime('checkin');
             $table->dateTime('checkout');
-            $table->string('arrival_time');
+            $table->string('arrival_time')->default(null)->nullable();
             $table->string('status')->default('pending');
             $table->dateTime('expiration_date')->nullable();
             $table->integer('adults')->default(1);
@@ -32,14 +32,14 @@ return new class extends Migration
             $table->string('reservation_type')->default('walking_in')->nullable();
             $table->integer('rooms')->nullable();
             $table->unsignedBigInteger('room_type_id');
-            $table->unsignedBigInteger('room_id')->nullable();
+            $table->unsignedBigInteger('room_id')->default(null)->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->string('shift')->nullable();
+            $table->string('shift')->default(null)->nullable();
             $table->unsignedBigInteger('guests_id')->nullable();
             $table->decimal('total')->default('0.0000')->nullable();
-            $table->string('tax_free_account')->nullable();
+            $table->string('tax_free_account')->default('0.0000')->nullable();
             $table->integer('mail_sent')->default(0)->nullable();
-
+            $table->string('internal_reference')->default(null)->nullable();
 
             $table->timestamps();
         });

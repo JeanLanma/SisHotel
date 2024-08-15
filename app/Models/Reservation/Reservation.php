@@ -37,6 +37,7 @@ class Reservation extends Model
         'tax_free_account',
         'total',
         'mail_sent',
+        'internal_reference',
     ];
 
     public function roomType()

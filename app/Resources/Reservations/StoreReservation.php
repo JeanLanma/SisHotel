@@ -14,7 +14,7 @@ class StoreReservation
         $guests = StoreGuests::FromReservationRequest($request);
 
         $reservation = Reservation::create([
-            'serie' => $request->serie ?? 'A',
+            'serie' => $request->serie,
             'folio' => $request->folio ?? isset($lastReservation->folio) ? $lastReservation->folio + 1 : 1,
             'guests_name' => $request->name,
             'checkin' => $request->checkin,
