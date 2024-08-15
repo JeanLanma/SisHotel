@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
 
-            $table->string('serie')->default('A');
+            $table->string('serie')->default('A')->nullable();
             $table->string('folio')->default(null)->nullable();
             $table->string('guests_name');
             $table->dateTime('checkin');

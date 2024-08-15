@@ -45,6 +45,7 @@ const saveReservation = () =>{
         preserveScroll: true,
         onSuccess: () => {
             ToastSuccess('Reservación guardada');
+            ReservationForm.reset();
         },
         onError: (errors) => {
             log('Error', errors);

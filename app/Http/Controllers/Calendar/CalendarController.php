@@ -13,11 +13,17 @@ class CalendarController extends Controller
     
     public function index($from_date = null, $to_date = null)
     {
-        // return response()->json([
-        //     'message' => GetRooms::GetCollectionGroupedBy(),
-        // ]);
+        $Dates = GetDates::getCollection($from_date, $to_date, 30);
+
         $from_date = $from_date ?? date('Y-m-d');
         $to_date = $to_date ?? date('Y-m-d', strtotime('30 days'));
+        if($Dates->count() == 0) {
+            return response()->json([
+                'message' => 'No dates found',
+                'from_date' => $from_date,
+                'to_date' => $to_date,
+            ]);
+        }
         return inertia('Frontend/Calendar/IndexCalendar', [
             'from_date' => $from_date,
             'to_date' => $to_date,
