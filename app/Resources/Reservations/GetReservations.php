@@ -12,6 +12,13 @@ class GetReservations
     }
     public static function GetUpcomingReservations($limit = 15)
     {
-        return Reservation::with('roomType')->where('checkin', '>=', now())->orderBy('checkin', 'asc')->paginate($limit);
+        return Reservation::with([
+                                'roomType' => function($query){
+                                    $query->select('id', 'name');
+                                },
+                                'guests' => function($query){
+                                    $query->select('id', 'name', 'lastname');
+                                },
+                            ])->where('checkin', '>=', now())->orderBy('checkin', 'asc')->paginate($limit);
     }
 }

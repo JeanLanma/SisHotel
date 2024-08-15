@@ -20,13 +20,21 @@ Logger('Upcoming Reservations List', props.UpcomingReservations);
             </tr>
         </thead>
         <tbody>
-            <tr v-for="(reservation, index) in props.UpcomingReservations" :key="index" class="border-b w-full">
+            <tr v-for="(reservation, index) in props.UpcomingReservations" :key="index" class="border-b w-full hover:bg-slate-100 transition-colors duration-150">
                 <td class="px-4 py-2 text-left align-top w-1/2">
                     <div>
-                        <h2 class="font-bold text-gray-800">{{ reservation.guests_name }}</h2>
+                        <h2 class="font-bold text-gray-800">
+                            <div class="flex">
+                                <p class="mr-2">
+                                    {{ reservation.guests?.full_name.trim() }}:
+                                </p>
+                                <p class="mr-2 font-normal"><span class="bg-gray-200 rounded-xl text-sm px-2 py-1 text-gray-600 font-bold">Checkin:</span> {{ FormatDate(reservation.checkin) }}</p>
+                                <p class="font-normal"><span class="bg-gray-200 rounded-xl text-sm px-2 py-1 text-gray-600 font-bold">Checkout:</span> {{ FormatDate(reservation.checkout) }}</p>
+                            </div>
+                        </h2>
                         <div class="flex">
-                            <p class="mr-2"><span class="bg-gray-200 rounded-xl text-sm px-2 py-1 text-gray-600 font-bold">Checkin:</span> {{ FormatDate(reservation.checkin) }}</p>
-                            <p><span class="bg-gray-200 rounded-xl text-sm px-2 py-1 text-gray-600 font-bold">Checkout:</span> {{ FormatDate(reservation.checkout) }}</p>
+                            {{ reservation.room_type.name }}
+                            
                         </div>
                     </div>
                 </td>
