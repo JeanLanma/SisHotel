@@ -8,6 +8,18 @@ const FormatDate = (date) => {
     const day = d.getDate().toString().padStart(2, '0');
     return `${year}-${month}-${day}`;
 };
+
+/**
+ * Format a date to human readable format like "Viernes, 16 de Agosto de 2024"
+ * @param {*} date 
+ * @returns string
+ */
+const FormatDateToHuman = (date) => {
+    const d = new Date(date);
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const dateStr = d.toLocaleDateString('es-MX', options);
+    return dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+};
 // Prices
 
 /**
@@ -43,5 +55,6 @@ export {
     GetTotalPrice,
     ApplyTax,
     FormatDate,
+    FormatDateToHuman,
     FormatCurrency,
 };

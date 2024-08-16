@@ -19,10 +19,23 @@ class GetReservations
                                 'guests' => function($query){
                                     $query->select('id', 'name', 'lastname');
                                 },
+                                'user' => function($query){
+                                    $query->select('id', 'name');
+                                },
                             ])->where('checkin', '>=', now())->orderBy('checkin', 'asc')->paginate($limit);
     }
     public static function GetReservation($id)
     {
-        return Reservation::with('roomType')->find($id);
+        return Reservation::with([
+            'roomType' => function($query){
+                $query->select('*');
+            },
+            'guests' => function($query){
+                $query->select(['id', 'name', 'lastname', 'phone', 'email', 'created_at']);
+            },
+            'user' => function($query){
+                $query->select(['id', 'name', 'email']);
+            },
+                        ])->find($id);
     }
 }

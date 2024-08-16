@@ -32,8 +32,9 @@ class NewReservationController extends Controller
     }
     public function show($reservation)
     {
+        // return response()->json(GetReservations::GetReservation($reservation));
         return inertia('Frontend/Reservations/ShowReservation', [
-            'reservation' => GetReservations::GetReservation($reservation),
+            'Reservation' => GetReservations::GetReservation($reservation),
             'RoomTypes' => GetRoomTypes::GetCollection(15)
         ]);
     }

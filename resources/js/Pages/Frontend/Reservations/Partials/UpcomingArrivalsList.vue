@@ -22,7 +22,7 @@ Logger('Upcoming Reservations List', props.UpcomingReservations);
         <tbody>
             <tr v-for="(reservation, index) in props.UpcomingReservations" :key="index" class="border-b w-full hover:bg-slate-100 transition-colors duration-150">
                 <td class="px-4 py-2 text-left align-top w-1/2">
-                    <a :href="route('admin.')" class="bg-red-500">
+                    <a :href="route('admin.reservations.show', { reservation: reservation.id })" class="bg-red-500">
                         <h2 class="font-bold text-gray-800">
                             <div class="flex">
                                 <p class="mr-2">

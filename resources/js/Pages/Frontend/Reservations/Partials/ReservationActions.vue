@@ -7,6 +7,10 @@ import { GetToday } from '@/Helpers/Calendar/Dates';
 const { currentTime } = useCurrentTime();
 const today = GetToday();
 
+const props = defineProps({
+    UpcomingReservations: Array,
+});
+Logger('Upcoming Reservations Actions:13', props.UpcomingReservations);
 </script>
 <template>
 <!-- Contenedor Principal -->
@@ -15,8 +19,8 @@ const today = GetToday();
     <div class="bg-white p-6 rounded-lg border border-gray-200 mb-4 lg:mb-0 shadow-md lg:w-[35%]">
         <div class="flex justify-center items-center space-x-5 h-full">
             <div>
-                <p>Llegadas hoy</p>
-                <h2 class="text-4xl font-bold text-gray-600">2</h2>
+                <p>Proximas llegadas</p>
+                <h2 class="text-4xl font-bold text-gray-600">{{ props.UpcomingReservations.length }}</h2>
                 <p>{{ currentTime }}</p>
             </div>
             <!-- <img src="https://www.emprenderconactitud.com/img/Wallet.png" alt="wallet" class="h-24 md:h-20 w-38"> -->
