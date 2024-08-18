@@ -1,7 +1,10 @@
 <script setup>
 import { ref } from 'vue';
 import { ToastSuccess } from '@/Shared/Toast.js'
-import {FormatDateToHuman} from '@/Helpers/Reservation/Reservation.js';
+import {
+        FormatDateToHuman,
+        FormatCurrency
+    } from '@/Helpers/Reservation/Reservation.js';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import ShowReservationForm from '@/Pages/Frontend/Reservations/Partials/ShowReservationForm.vue';
 const props = defineProps({
@@ -52,7 +55,7 @@ const RoomTypes = ref(props.RoomTypes.data);
                                 <div>
                                     <div class="flex justify-between bg-gray-100 px-3 py-3 rounded-2xl mb-4">
                                         <p class="text-gray-600 font-semibold">Habitación:</p>
-                                        <p class="text-gray-800 font-semibold">{{ props.Reservation.room_type.name }}</p>
+                                        <p class="text-gray-800 font-semibold">{{ props.Reservation.room_type.name }} <span class="text-xs font-bold">(x2 noches)</span> </p>
                                     </div>
                                     <div class="flex justify-between bg-gray-100 px-3 py-3 rounded-2xl mb-4">
                                         <p class="text-gray-600 font-semibold">Llegada:</p>
@@ -61,6 +64,16 @@ const RoomTypes = ref(props.RoomTypes.data);
                                     <div class="flex justify-between bg-gray-100 px-3 py-3 rounded-2xl">
                                         <p class="text-gray-600 font-semibold">Salida:</p>
                                         <p class="text-gray-800 font-semibold">{{ FormatDateToHuman(props.Reservation.checkout) }}</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between bg-emerald-50 px-3 py-3 rounded-2xl mt-4 mb-4">
+                                        <p class="text-gray-600 font-semibold">Subtotal:</p>
+                                        <p class="text-gray-800 font-semibold">{{ FormatCurrency(props.Reservation.tax_free_account) }}</p>
+                                    </div>
+                                    <div class="flex justify-between bg-emerald-50 px-3 py-3 rounded-2xl">
+                                        <p class="text-gray-600 font-semibold">Total:</p>
+                                        <p class="text-gray-800 font-semibold">{{ FormatCurrency(props.Reservation.total) }}</p>
                                     </div>
                                 </div>
                         </div>
