@@ -39,7 +39,9 @@ class Reservation extends Model
         'total',
         'mail_sent',
         'internal_reference',
-        'reservation_source'
+        'reservation_source',
+        'rate_id',
+        'night_costs'
     ];
 
     public function roomType()

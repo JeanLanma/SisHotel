@@ -43,7 +43,7 @@ return new class extends Migration
             $table->string('internal_reference')->default(null)->nullable();
             $table->string('reservation_source')->default('pms')->nullable();
             $table->unsignedBigInteger('rate_id')->default(null)->nullable();
-            $table->text('night_costs')->default('{}')->nullable();
+            $table->text('night_costs')->nullable();
 
             $table->timestamps();
         });
