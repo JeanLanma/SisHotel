@@ -15,7 +15,8 @@ class Reservation extends Model
     protected $fillable = [
         'serie',
         'folio',
-        'guests_name',
+        'guest_name',
+        'guest_lastname',
         'checkin',
         'checkout',
         'arrival_time',
@@ -38,6 +39,7 @@ class Reservation extends Model
         'total',
         'mail_sent',
         'internal_reference',
+        'reservation_source'
     ];
 
     public function roomType()

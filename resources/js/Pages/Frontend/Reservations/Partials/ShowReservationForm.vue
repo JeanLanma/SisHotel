@@ -17,7 +17,7 @@ const props = defineProps({
 });
 const Reservation = ref(props.Reservation || ReservationData);
 const RoomTypes = ref(props.RoomTypes);
-Logger('ReservationForm:19', Reservation.value);
+Logger('ReservationForm:20', Reservation.value);
 const ReservationForm = useForm({
     checkin: FormatDate(Reservation.value.checkin),
     checkout: FormatDate(Reservation.value.checkout),
@@ -61,6 +61,9 @@ const saveReservation = () =>{
 </script>
 
 <template>
+    <div class="-mt-2">
+        <h1 class="text-2xl font-bold text-gray-700">Datos de la reservación</h1>
+    </div>
     <form >
     <!-- Reserva -->
     <div>
@@ -69,7 +72,7 @@ const saveReservation = () =>{
             <!-- Checkin -->
             <div class="w-1/3 mr-4">
                 <label for="checkin" class="block text-sm font-bold text-gray-700">Check in</label>
-                <TextInput v-model="ReservationForm.checkin" type="date" name="checkin" id="checkin" class="mt-1 w-full"/>
+                <TextInput disabled="true" v-model="ReservationForm.checkin" type="date" name="checkin" id="checkin" class="mt-1 w-full"/>
             </div>
             <!-- Checkout -->
             <div class="w-1/3 mr-4">

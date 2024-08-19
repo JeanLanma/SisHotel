@@ -16,7 +16,8 @@ return new class extends Migration
 
             $table->string('serie')->default('A')->nullable();
             $table->string('folio')->default(null)->nullable();
-            $table->string('guests_name');
+            $table->string('guest_name');
+            $table->string('guest_lastname')->nullable();
             $table->dateTime('checkin');
             $table->dateTime('checkout');
             $table->string('arrival_time')->default(null)->nullable();
@@ -40,6 +41,9 @@ return new class extends Migration
             $table->string('tax_free_account')->default('0.0000')->nullable();
             $table->integer('mail_sent')->default(0)->nullable();
             $table->string('internal_reference')->default(null)->nullable();
+            $table->string('reservation_source')->default('pms')->nullable();
+            $table->unsignedBigInteger('rate_id')->default(null)->nullable();
+            $table->text('night_costs')->default('{}')->nullable();
 
             $table->timestamps();
         });

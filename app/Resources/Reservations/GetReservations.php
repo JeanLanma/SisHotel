@@ -12,6 +12,7 @@ class GetReservations
     }
     public static function GetUpcomingReservations($limit = 15)
     {
+        $todayDate = date('Y-m-d');
         return Reservation::with([
                                 'roomType' => function($query){
                                     $query->select('id', 'name');
@@ -22,7 +23,7 @@ class GetReservations
                                 'user' => function($query){
                                     $query->select('id', 'name');
                                 },
-                            ])->where('checkin', '>=', now())->orderBy('checkin', 'asc')->paginate($limit);
+                            ])->where('checkin', '>=', $todayDate)->orderBy('checkin', 'asc')->paginate($limit);
     }
     public static function GetReservation($id)
     {

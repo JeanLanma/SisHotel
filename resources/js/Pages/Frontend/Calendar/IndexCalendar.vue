@@ -10,9 +10,9 @@ const props = defineProps({
     to_date: String,
 });
 
-Logger('Fechas de la base datos',   props.Dates);
-Logger('Habitaciones de la base datos',   props.Rooms);
-Logger('Parametros de fechas',   {from_date: props.from_date, to_date: props.to_date});
+// Logger('Calendar:Fechas de la base datos',   props.Dates);
+Logger('Calendar:Habitaciones de la base datos',   props.Rooms);
+Logger('Calendar:Parametros de fechas',   {from_date: props.from_date, to_date: props.to_date});
 </script>
 
 <template>

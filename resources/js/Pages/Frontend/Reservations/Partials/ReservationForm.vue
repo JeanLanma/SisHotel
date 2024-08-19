@@ -35,7 +35,6 @@ const ReservationForm = useForm({
     total: 0,
 });
 
-
 const saveReservation = () =>{
     
     ReservationForm.nights = GetNights(ReservationForm.checkin, ReservationForm.checkout);

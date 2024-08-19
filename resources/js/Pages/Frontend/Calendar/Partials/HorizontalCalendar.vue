@@ -1,6 +1,7 @@
 <script setup>
 import Logger from '@/Helpers/Logger';
 import { ref } from 'vue';
+import Swal from 'sweetalert2'
 
 const date = ref(new Date());
 // Get today date in format YYYY-MM-DD
@@ -15,6 +16,7 @@ const props = defineProps({
 
 const HandleClickRoomDate = (event) => {
     Logger('Click en la celda', event.target.id);
+    Swal.fire(event.target.id);
 }
 </script>
 

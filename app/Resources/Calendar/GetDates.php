@@ -14,8 +14,8 @@ class GetDates
         $month = date('m', strtotime($from_date));
         $year = date('Y', strtotime($from_date));
         return Calendar::where('day', '>=', $day)
-                        ->where('month', '<=', $month)
-                        ->where('year', '<=', $year)
+                        ->where('month', '>=', $month)
+                        ->where('year', '>=', $year)
                         ->limit($limit)->get();
     }
     public function getDates($from_date, $to_date)
