@@ -13,7 +13,6 @@ const props = defineProps({
     RoomTypes: Object,
 });
 const RoomTypes = ref(props.RoomTypes);
-log('Room Types in Form',RoomTypes.value);
 const ReservationForm = useForm({
     checkin: '',
     checkout: '',
@@ -52,6 +51,35 @@ const saveReservation = () =>{
         }
     });
 }
+
+const HandleRoomTypeInput = (e) => {
+    const RoomTypeRequested = {
+        'room_type': e.target.value,
+        'room': RoomTypes.value.find(rt => rt.id == e.target.value),
+        'checkin': ReservationForm.checkin,
+        'checkout': ReservationForm.checkout,
+    }
+    // Validate checkin and checkout
+    if(ReservationForm.checkin == ''){
+        ReservationForm.setError({
+            checkin: 'Por favor selecciona una fecha',
+        });
+        setTimeout(() => {
+            ReservationForm.clearErrors('checkin');
+        }, 5000);
+        return;
+    } if(ReservationForm.checkout == ''){
+        ReservationForm.setError({
+            checkout: 'Por favor selecciona una fecha',
+        });
+        setTimeout(() => {
+            ReservationForm.clearErrors('checkout');
+        }, 5000);
+        return;
+    }
+    // Validate if room is available
+    log('Request Room Availability', RoomTypeRequested);
+}
 </script>
 
 <template>
@@ -62,18 +90,18 @@ const saveReservation = () =>{
         <div class="flex">
             <!-- Checkin -->
             <div class="w-1/3 mr-4">
-                <label for="checkin" class="block text-sm font-bold text-gray-700">Check in</label>
-                <TextInput v-model="ReservationForm.checkin" type="date" name="checkin" id="checkin" class="mt-1 w-full"/>
+                <label for="checkin" class="block text-sm font-bold text-gray-700" :class="ReservationForm.errors.checkin ? 'text-red-500' : ''">Check in <span class="text-xs" v-show="ReservationForm.errors.checkin">({{ ReservationForm.errors.checkin ?? null }})</span></label>
+                <TextInput v-model="ReservationForm.checkin" type="date" name="checkin" id="checkin" class="mt-1 w-full" :class="ReservationForm.errors.checkin ? 'border-red-500' : ''" />
             </div>
             <!-- Checkout -->
             <div class="w-1/3 mr-4">
-                <label for="checkout" class="block text-sm font-bold text-gray-700">Check out</label>
-                <TextInput v-model="ReservationForm.checkout" type="date" name="checkout" id="checkout" class="mt-1 w-full"/>
+                <label for="checkout" class="block text-sm font-bold text-gray-700" :class="ReservationForm.errors.checkout ? 'text-red-500' : ''">Check out <span class="text-xs" v-show="ReservationForm.errors.checkout">({{ ReservationForm.errors.checkout ?? null }})</span></label>
+                <TextInput v-model="ReservationForm.checkout" type="date" name="checkout" id="checkout" class="mt-1 w-full" :class="ReservationForm.errors.checkout ? 'border-red-500' : ''"/>
             </div>
             <!-- Tipo de habitacion -->
             <div class="w-1/3">
                 <label for="room_type" class="block text-sm font-bold text-gray-700">Tipo de habitación</label>
-                <select placeholder="-- Tipo de habitación --" v-model="ReservationForm.room_type" id="room_type" name="room_type" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 w-full">
+                <select @change="HandleRoomTypeInput" placeholder="-- Tipo de habitación --" v-model="ReservationForm.room_type" id="room_type" name="room_type" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 w-full">
                     <option selected value="" disabled>-- seleccionar --</option>
                     <option v-for="rt in RoomTypes" :value="rt.id">{{ rt.name }} - {{ rt.room_type }}</option>
                 </select>

@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from 'vue';
-import { ToastSuccess } from '@/Shared/Toast.js'
 import AppLayout from '@/Layouts/AppLayout.vue';
 import ReservationForm from '@/Pages/Frontend/Reservations/Partials/ReservationForm.vue';
 const props = defineProps({

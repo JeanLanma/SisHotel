@@ -47,6 +47,9 @@ Route::middleware([
         // Route::put('/rooms/{room}', [App\Http\Controllers\Admin\Rooms\RoomsController::class, 'update'])->name('admin.rooms.rooms.update');
         Route::delete('/rooms/{room}', [App\Http\Controllers\Admin\Rooms\RoomsController::class, 'destroy'])->name('admin.rooms.rooms.destroy');
     });
+    #Rooms Availability
+    Route::get('/api/rooms/availability/', [App\Http\Controllers\Admin\Rooms\RoomsAvailabilityController::class, 'index'])->name('admin.rooms.rooms.availability.json');
+
     #Reservations
     Route::get('/reservations/', [App\Http\Controllers\Reservations\NewReservationController::class, 'index'])->name('admin.reservations.index');
     Route::get('/reservations/new', [App\Http\Controllers\Reservations\NewReservationController::class, 'create'])->name('admin.reservations.create');
