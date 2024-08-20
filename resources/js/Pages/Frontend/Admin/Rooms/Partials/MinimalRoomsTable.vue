@@ -4,6 +4,7 @@ import ActionButton from '@/Components/ActionButton.vue';
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import { ToastSuccess } from '@/Shared/Toast';
+import Logger from '@/Helpers/Logger';
 
 const props = defineProps({
     room_type: {
@@ -45,7 +46,7 @@ const addNewRoom = () => {
 function getRoomsByType(type) {
     return axios.get(`/admin/rooms/api/rooms/${type}`)
         .then(response => {
-            console.log(response.data);
+            Logger('MinimalRoomsTable:49 axios call', response.data);
             return response.data;
         })
         .catch(error => {
@@ -55,12 +56,12 @@ function getRoomsByType(type) {
 }
 async function Dev() {
     Rooms.value = await getRoomsByType(props.room_type);
+    Logger('MinimalRoomsTable', props.room_type);
     Rooms.value = Rooms.value.data;
     areRoomsLoaded.value = true;
     console.log(Rooms.value);
 } 
 const SaveRooms = (Room) => {
-    // console.log({'action': 'submit', 'Room': Room});
     RoomsForm.id = Room?.id ? Room.id : null;
     RoomsForm.room_type_id = props.room_type;
     RoomsForm.room = Room.room;
@@ -144,8 +145,8 @@ Dev(props.room_type);
             <td class="pl-4 bg-indigo-200">
               <span class="text-center ml-2 font-semibold">{{props.RoomType}}</span>
             </td>
-            <td class="px-16 py-2">
-              <span class="text-center ml-2 font-semibold">Cargando habitaciones...</span>
+            <td class="px-16 py-2" colspan="2">
+              <span class="text-center font-semibold">No se encontraron habitaciones...</span>
             </td>
           </tr>
         </tbody>

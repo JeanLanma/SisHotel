@@ -19,7 +19,7 @@ class RoomsController extends Controller
 
     public function getRoomsJson(Request $request, $room_type_id)
     {
-        return response()->json(GetRooms::GetCollection(15, ['room_type_id' => $room_type_id]));
+        return response()->json(GetRooms::Get(15, ['room_type_id' => $room_type_id]));
     }
 
     public function storeRoomsJson(Request $request, $room_type_id)

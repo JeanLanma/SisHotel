@@ -7,6 +7,14 @@ use App\Models\Admin\Rooms\RoomType;
 
 class GetRooms {
     
+    public static function Get($limit = 15, $params = [])
+    {
+        $params = array_filter($params);
+        if (count($params) > 0) {
+            return Room::where($params)->paginate($limit);
+        }
+        return Room::paginate($limit);
+    }
         public static function GetCollection($limit = 15, $params = [])
         {
             $params = array_filter($params);
