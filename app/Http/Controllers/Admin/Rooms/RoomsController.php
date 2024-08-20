@@ -11,7 +11,10 @@ class RoomsController extends Controller
 {
     public function index()
     {
-        return inertia('Frontend/Admin/Rooms/ShowRooms');
+        $Rooms = GetRooms::GetCollection(null, ['status' => 'available']);
+        return inertia('Frontend/Admin/Rooms/ShowRooms', [
+            'Rooms' => $Rooms
+        ]);
     }
 
     public function getRoomsJson(Request $request, $room_type_id)

@@ -38,7 +38,7 @@ Route::middleware([
     });
     #Rooms
     Route::prefix('admin/rooms')->group(function () {
-        Route::get('/rooms', [App\Http\Controllers\Admin\Rooms\RoomsController::class, 'index'])->name('admin.rooms.rooms.index');
+        Route::get('/', [App\Http\Controllers\Admin\Rooms\RoomsController::class, 'index'])->name('admin.rooms.rooms.index');
         Route::get('/api/rooms/{room_type_id}', [App\Http\Controllers\Admin\Rooms\RoomsController::class, 'getRoomsJson'])->name('admin.rooms.rooms.get.json');
         Route::post('/api/rooms/{room_type_id}/store', [App\Http\Controllers\Admin\Rooms\RoomsController::class, 'storeRoomsJson'])->name('admin.rooms.rooms.store.json');
         // Route::get('/rooms/create', [App\Http\Controllers\Admin\Rooms\RoomsController::class, 'create'])->name('admin.rooms.rooms.create');

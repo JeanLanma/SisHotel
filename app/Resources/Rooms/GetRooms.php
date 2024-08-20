@@ -3,16 +3,24 @@
 namespace App\Resources\Rooms;
 
 use App\Models\Admin\Rooms\Room;
+use App\Models\Admin\Rooms\RoomType;
 
 class GetRooms {
     
         public static function GetCollection($limit = 15, $params = [])
         {
             $params = array_filter($params);
+            $_Room = RoomType::query();
+            $_Room->select(['id', 'name', 'room_type', 'status', 'base_price', 'description']);
+            $_Room->with(['rooms' => function($query)
+            {
+                $query->select(['id', 'room_type_id', 'room', 'status']);
+            }]);
+            return $_Room->paginate($limit);
             if (count($params) > 0) {
-                return Room::where($params)->paginate($limit);
+                $_Room = $_Room->where($params);
             }
-            return Room::paginate($limit);
+            return $_Room->paginate($limit)->groupBy('room_type');
         }
     
         public static function GetCollectionGroupedBy($GroupBy = 'Roomtype.room_type')
