@@ -28,7 +28,7 @@ const ReservationForm = useForm({
     rooms: Reservation.value.rooms,
     room_type_id: Reservation.value.room_type_id,
 
-    name: Reservation.value.guests_name,
+    name: Reservation.value.guest_name,
     lastname: Reservation.value.guests.lastname,
     email: Reservation.value.email,
     phone: Reservation.value.phone,
