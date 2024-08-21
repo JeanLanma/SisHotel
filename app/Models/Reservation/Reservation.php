@@ -2,6 +2,7 @@
 
 namespace App\Models\Reservation;
 
+use App\Models\Admin\Rooms\Room;
 use App\Models\Admin\Rooms\RoomType;
 use App\Models\Guest\Guest;
 use App\Models\User;
@@ -47,6 +48,10 @@ class Reservation extends Model
     public function roomType()
     {
         return $this->belongsTo(RoomType::class);
+    }
+    public function room()
+    {
+        return $this->belongsTo(Room::class);
     }
     public function user()
     {

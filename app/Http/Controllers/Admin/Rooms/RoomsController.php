@@ -22,6 +22,11 @@ class RoomsController extends Controller
         return response()->json(GetRooms::Get(15, ['room_type_id' => $room_type_id]));
     }
 
+    public function getRoomAvailabilityJson(Request $request, $room_type_id, $checkin, $checkout)
+    {
+        return response()->json(GetRooms::GetRoomAvailabilityByRoomType($room_type_id, $checkin, $checkout));
+    }
+
     public function storeRoomsJson(Request $request, $room_type_id)
     {
         return redirect()->back()->with(

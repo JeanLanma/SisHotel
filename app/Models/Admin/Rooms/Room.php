@@ -2,6 +2,7 @@
 
 namespace App\Models\Admin\Rooms;
 
+use App\Models\Reservation\Reservation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,5 +23,9 @@ class Room extends Model
     public function roomType()
     {
         return $this->belongsTo(RoomType::class);
+    }
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
     }
 }

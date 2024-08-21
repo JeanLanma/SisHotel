@@ -8,11 +8,14 @@ import { GetNights,
          GetTotalPrice,
          ApplyTax
  } from '@/Helpers/Reservation/Reservation';
+import { RoomStatusLabel } from '@/Helpers/Rooms/RoomEnums';
+import axios from 'axios';
 
 const props = defineProps({
     RoomTypes: Object,
 });
 const RoomTypes = ref(props.RoomTypes);
+const RoomAvailability = ref([]);
 const ReservationForm = useForm({
     checkin: '',
     checkout: '',
@@ -21,6 +24,7 @@ const ReservationForm = useForm({
     adults: 2,
     kids: 0,
     rooms: 1,
+    room_id: null,
 
     name: '',
     lastname: '',
@@ -68,7 +72,8 @@ const HandleRoomTypeInput = (e) => {
             ReservationForm.clearErrors('checkin');
         }, 5000);
         return;
-    } if(ReservationForm.checkout == ''){
+    }
+    if(ReservationForm.checkout == ''){
         ReservationForm.setError({
             checkout: 'Por favor selecciona una fecha',
         });
@@ -78,6 +83,18 @@ const HandleRoomTypeInput = (e) => {
         return;
     }
     // Validate if room is available
+    axios.get(route('admin.rooms.rooms.get.availability.json', {
+        checkin: ReservationForm.checkin,
+        checkout: ReservationForm.checkout,
+        room_type_id: e.target.value,
+    })).then(response => {
+        log('Room Availability', response.data);
+        RoomAvailability.value = response.data;
+    }).catch(error => {
+        log('Error', error);
+    });
+
+
     log('Request Room Availability', RoomTypeRequested);
 }
 </script>
@@ -122,9 +139,17 @@ const HandleRoomTypeInput = (e) => {
                 <TextInput min="0" v-model="ReservationForm.kids" type="number" name="children" id="children" class="mt-1 -full"/>
             </div>
             <!-- Habitaciones -->
-            <div class="w-1/8">
+            <div class="w-1/8 mr-4">
                 <label for="rooms" class="block text-sm font-bold text-gray-700">Habitaciones</label>
                 <TextInput min="0" v-model="ReservationForm.rooms" type="number" name="rooms" id="rooms" class="mt-1 w-full"/>
+            </div>
+            <!-- Habitaciones Disponibles-->
+            <div v-if="RoomAvailability.length > 0" class="w-3/8">
+                <label for="room_id" class="block text-sm font-bold text-gray-700">Habitaciones disponibles</label>
+                <select v-model="ReservationForm.room_id" name="room_id" id="room_id" class="w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                    <option selected value="null" disabled>--- seleccionar ---</option>
+                    <option v-for="room in RoomAvailability" :value="room.id" :disabled="room.status != 'available'">{{ room.room }} - {{ RoomStatusLabel(room.status) }}</option>
+                </select>
             </div>
         </div>
 
