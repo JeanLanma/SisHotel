@@ -1,3 +1,10 @@
+const RoomStatus = {
+    AVAILABLE: 'available',
+    OCCUPIED: 'occupied',
+    UNAVAILABLE: 'unavailable',
+    MAINTENANCE: 'maintenance',
+};
+
 const RoomStatusColor = (status) => {
     const colors = {
         'available': 'bg-green-200',
@@ -9,6 +16,7 @@ const RoomStatusColor = (status) => {
 const RoomStatusLabel = (status) => {
     const colors = {
         'available': 'Disponible',
+        'occupied': 'Ocupada',
         'unavailable': 'No disponible',
         'maintenance': 'Mantenimiento',
     }
@@ -16,5 +24,6 @@ const RoomStatusLabel = (status) => {
 }
 export {
     RoomStatusColor,
-    RoomStatusLabel
+    RoomStatusLabel,
+    RoomStatus
 };

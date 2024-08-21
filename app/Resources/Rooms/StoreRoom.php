@@ -11,6 +11,11 @@ class StoreRoom {
             return Room::create($room);
         }
 
+        public static function UpdateRoomStatus($room, $status)
+        {
+            return Room::where('id', $room)->update(['status' => $status]);
+        }
+
         public static function fromRequest($request)
         {
             if($request->id != null) {

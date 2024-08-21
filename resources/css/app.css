@@ -10,6 +10,19 @@
         box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
     }
 }
+.bg-green-200 {
+    background-color: #a5dc86
+}
+.bg-red-200 {
+    background-color: #f27474
+}
+.bg-yellow-200 {
+    background-color: #f8bb86
+}
+.bg-sky-200 {
+    background-color: #bae6fd
+}
+/* SWAL2 */
 .colored-toast.swal2-icon-success {
     background-color: #a5dc86 !important;
 }

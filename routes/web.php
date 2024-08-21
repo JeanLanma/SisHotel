@@ -39,6 +39,7 @@ Route::middleware([
     #Rooms
     Route::prefix('admin/rooms')->group(function () {
         Route::get('/', [App\Http\Controllers\Admin\Rooms\RoomsController::class, 'index'])->name('admin.rooms.rooms.index');
+        Route::post('/api/rooms/{room}/update', [App\Http\Controllers\Admin\Rooms\RoomsController::class, 'updateRoomJson'])->name('admin.rooms.rooms.update.json');
         Route::get('/api/rooms/{room_type_id}', [App\Http\Controllers\Admin\Rooms\RoomsController::class, 'getRoomsJson'])->name('admin.rooms.rooms.get.json');
         Route::post('/api/rooms/{room_type_id}/store', [App\Http\Controllers\Admin\Rooms\RoomsController::class, 'storeRoomsJson'])->name('admin.rooms.rooms.store.json');
         // Route::get('/rooms/create', [App\Http\Controllers\Admin\Rooms\RoomsController::class, 'create'])->name('admin.rooms.rooms.create');

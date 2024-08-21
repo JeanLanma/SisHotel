@@ -83,6 +83,11 @@ const submitForm = ({id, name, room_type, base_occupancy, base_occupancy_kids, b
                     <button @click="addNewRoomType" class="py-2 px-4 bg-indigo-100 text-indigo-500 hover:bg-indigo-200 hover:shadow-md transition-all duration-200 font-medium rounded-md mb-4">
                         Añadir nueva
                     </button>
+                    <a :href="route('admin.rooms.rooms.index')">
+                        <button class="ml-4 py-2 px-4 bg-sky-100 text-sky-500 hover:bg-sky-200 hover:shadow-md transition-all duration-200 font-medium rounded-md mb-4">
+                            Ver todas las habitaciones
+                        </button>
+                    </a>
                 </div>
 
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg w-full">

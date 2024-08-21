@@ -32,6 +32,17 @@ class RoomsController extends Controller
         );
     }
 
+    public function updateRoomJson(Request $request, $room)
+    {
+        return response()->json(
+            [
+                'message' => 'Room updated successfully',
+                'status' => 'ok',
+                'data' => StoreRoom::UpdateRoomStatus($room, $request->status)
+            ]
+        );
+    }
+
     public function store(Request $request)
     {
         return redirect()->route('admin.rooms.rooms.index');
