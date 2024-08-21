@@ -12,11 +12,43 @@ const Toast = Swal.mixin({
     timerProgressBar: true,
 });
 
-export default Toast;
-
-export const ToastSuccess = (message = 'Success') => {
+const ToastSuccess = (message = 'Success') => {
     Toast.fire({
         icon: 'success',
         title: message,
     });
+}
+const ToastError = (message = 'Error') => {
+    Toast.fire({
+        icon: 'error',
+        title: message,
+    });
+}
+const ToastWarning = (message = 'Warning') => {
+    Toast.fire({
+        icon: 'warning',
+        title: message,
+    });
+}
+const ToastInfo = (message = 'Info') => {
+    Toast.fire({
+        icon: 'info',
+        title: message,
+    });
+}
+const ToastQuestion = (message = 'Question') => {
+    Toast.fire({
+        icon: 'question',
+        title: message,
+    });
+};
+
+export default Toast;
+export {
+    Toast,
+    ToastSuccess,
+    ToastError,
+    ToastWarning,
+    ToastInfo,
+    ToastQuestion,
 }

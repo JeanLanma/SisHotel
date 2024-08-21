@@ -43,6 +43,7 @@ Route::middleware([
         // Rooms API
         Route::get('/api/rooms/{room_type_id}', [App\Http\Controllers\Admin\Rooms\RoomsController::class, 'getRoomsJson'])->name('admin.rooms.rooms.get.json');
         Route::get('/api/rooms/availability/{room_type_id}/{checkin}/{checkout}', [App\Http\Controllers\Admin\Rooms\RoomsController::class, 'getRoomAvailabilityJson'])->name('admin.rooms.rooms.get.availability.json');
+        Route::get('/api/rooms/room-type/availability/{room_type_id}/{checkin}/{checkout}', [App\Http\Controllers\Admin\Rooms\RoomsController::class, 'getRoomTypeAvailabilityJson'])->name('admin.rooms.rooms.get.room-type.availability.json');
         Route::post('/api/rooms/{room}/update', [App\Http\Controllers\Admin\Rooms\RoomsController::class, 'updateRoomJson'])->name('admin.rooms.rooms.update.json');
         Route::post('/api/rooms/{room_type_id}/store', [App\Http\Controllers\Admin\Rooms\RoomsController::class, 'storeRoomsJson'])->name('admin.rooms.rooms.store.json');
         

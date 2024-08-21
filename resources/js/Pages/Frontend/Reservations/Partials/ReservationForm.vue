@@ -2,7 +2,9 @@
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import TextInput from '@/Components/TextInput.vue';
-import { ToastSuccess } from '@/Shared/Toast.js'
+import { ToastSuccess,
+            ToastWarning
+ } from '@/Shared/Toast.js'
 import log from '@/Helpers/Logger.js';
 import { GetNights,
          GetTotalPrice,
@@ -82,19 +84,30 @@ const HandleRoomTypeInput = (e) => {
         }, 5000);
         return;
     }
-    // Validate if room is available
+    // Validate if rooms are available
+    axios.get(route('admin.rooms.rooms.get.room-type.availability.json', {
+        checkin: ReservationForm.checkin,
+        checkout: ReservationForm.checkout,
+        room_type_id: e.target.value,
+    })).then(response => {
+        if(response.data.available <= 0){
+            ToastWarning('No hay habitaciones disponibles para el tipo de habitación seleccionado');
+        }
+        log('Room Availability Complete:', response.data);
+    }).catch(error => {
+        log('Error', error);
+    });
     axios.get(route('admin.rooms.rooms.get.availability.json', {
         checkin: ReservationForm.checkin,
         checkout: ReservationForm.checkout,
         room_type_id: e.target.value,
     })).then(response => {
-        log('Room Availability', response.data);
+        // log('Room Availability', response.data);
         RoomAvailability.value = response.data;
     }).catch(error => {
         log('Error', error);
     });
 
-    log('Request Room Availability', RoomTypeRequested);
 }
 </script>
 

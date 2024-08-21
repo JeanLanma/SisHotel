@@ -4,6 +4,8 @@ namespace App\Resources\Rooms;
 
 use App\Models\Admin\Rooms\Room;
 use App\Models\Admin\Rooms\RoomType;
+use App\Models\Reservation\Reservation;
+use Carbon\Carbon;
 
 class GetRooms {
     
@@ -24,6 +26,37 @@ class GetRooms {
                     ->where('checkout', '>=', $checkout);
             })
             ->get();
+    }
+    public static function GetRoomTypeAvailabilityByRoomType($room_type_id, $checkin, $checkout)
+    {
+        // Ensure format date is correct yyyy-mm-dd
+        $checkin = date('Y-m-d', strtotime($checkin));
+        $checkout = date('Y-m-d', strtotime($checkout));
+        $_checkout = Carbon::createFromFormat('Y-m-d', $checkout)->addDays(1)->format('Y-m-d');
+
+        $response = [];
+        $response['rooms'] = Room::where('room_type_id', $room_type_id)
+            ->whereDoesntHave('reservations', function($query) use ($checkin, $checkout, $_checkout)
+            {
+                // Search for reservations within the checkin and checkout period
+                $query->whereDate('checkin', '>=', $checkin)
+                    ->whereDate('checkout', '<', $_checkout);
+            })
+            ->get();
+        $response['reserved'] = Reservation::where('room_type_id', $room_type_id)
+                                ->whereDate('checkin', '>=', $checkin)
+                                ->whereDate('checkout', '<', $_checkout)
+                                ->count();
+        $RoomsCount = Room::where('room_type_id', $room_type_id)->count();
+        $response['total'] = $RoomsCount;
+        $response['available'] = $RoomsCount - $response['reserved'];
+        $response['params'] = [
+            'checkin' => $checkin,
+            'checkout' => $checkout,
+            '_checkout' => $_checkout,
+            'room_type_id' => $room_type_id
+        ];
+        return $response;
     }
     public static function GetCollection($limit = 15, $params = [])
     {
