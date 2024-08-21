@@ -94,7 +94,6 @@ const HandleRoomTypeInput = (e) => {
         log('Error', error);
     });
 
-
     log('Request Room Availability', RoomTypeRequested);
 }
 </script>

@@ -31,6 +31,9 @@ class GetReservations
             'roomType' => function($query){
                 $query->select('*');
             },
+            'room' => function($query){
+                $query->select(['id', 'room_type_id', 'room', 'status']);
+            },
             'guests' => function($query){
                 $query->select(['id', 'name', 'lastname', 'phone', 'email', 'created_at']);
             },
