@@ -43,10 +43,14 @@ class GetRooms {
                     ->whereDate('checkout', '<', $_checkout);
             })
             ->get();
-        $response['reserved'] = Reservation::where('room_type_id', $room_type_id)
-                                ->whereDate('checkin', '>=', $checkin)
-                                ->whereDate('checkout', '<', $_checkout)
-                                ->count();
+            $response['reserved'] = Reservation::where('room_type_id', $room_type_id)
+                                    ->where(function($query) use ($checkin, $_checkout) {
+                                        $query->where(function($query) use ($checkin, $_checkout) {
+                                            $query->where('checkin', '<', $_checkout)
+                                                    ->where('checkout', '>', $checkin);
+                                        });
+                                    })
+                                    ->count();
         $RoomsCount = Room::where('room_type_id', $room_type_id)->count();
         $response['total'] = $RoomsCount;
         $response['available'] = $RoomsCount - $response['reserved'];
