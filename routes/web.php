@@ -64,6 +64,9 @@ Route::middleware([
     #Calendar
     Route::get('/calendar/{from_date?}/{to_date?}', [CalendarController::class, 'index'])->name('calendar.index');
     Route::get('/calendar/{from_date?}/{to_date?}/store', [CalendarController::class, 'store'])->name('calendar.store');
+    #Checkin
+    Route::get('reservations/arrivals/checkin/{reservation?}', [App\Http\Controllers\Arrivals\ArrivalsController::class, 'checkin'])->name('admin.reservations.arrivals.checkin');
+
 
     #Support
     Route::get('/support-send', [App\Http\Controllers\Contact\SupportContactController::class, 'send'])->name('admin.support.send');

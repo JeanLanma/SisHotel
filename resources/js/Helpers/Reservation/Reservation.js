@@ -20,6 +20,17 @@ const FormatDateToHuman = (date) => {
     const dateStr = d.toLocaleDateString('es-MX', options);
     return dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
 };
+/**
+ * Format a date to human readable format like "16 de Agosto, 2024"
+ * @param {*} date 
+ * @returns string
+ */
+const FormatToDateHumanShort = (date) => {
+    const d = new Date(date);
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const dateStr = d.toLocaleDateString('es-MX', options);
+    return dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+};
 // Prices
 
 /**
@@ -65,6 +76,7 @@ export {
     ApplyTax,
     FormatDate,
     FormatDateToHuman,
+    FormatToDateHumanShort,
     FormatCurrency,
     IsCheckInToday,
     IsCheckOutToday

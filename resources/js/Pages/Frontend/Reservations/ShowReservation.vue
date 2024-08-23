@@ -29,13 +29,13 @@ const RoomTypes = ref(props.RoomTypes.data);
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 
                 <div v-if="IsCheckInToday(props.Reservation.checkin)">
-                    <Link :href="route('admin.rooms.rooms.index')">
-                        <button class="w-full py-2 px-4 bg-amber-500 text-white hover:bg-sky-600 hover:shadow-md transition-all duration-200 font-medium rounded-md mb-4">
+                    <Link :href="route('admin.reservations.arrivals.checkin')">
+                        <button class="w-full py-2 px-4 bg-sky-500 text-white hover:bg-sky-600 hover:shadow-md transition-all duration-200 font-medium rounded-md mb-4">
                             Hacer Checkin ahora
                         </button>
                     </Link>
                 </div>
-                <div v-if="IsCheckOutToday(props.Reservation.checkout)">
+                <div v-if="IsCheckOutToday(props.Reservation.checkout, {reservation: props.Reservation.id})">
                     <Link :href="route('admin.rooms.rooms.index')">
                         <button class="w-full py-2 px-4 bg-amber-500 text-white hover:bg-amber-600 hover:shadow-md transition-all duration-200 font-medium rounded-md mb-4">
                             Hacer Checkout ahora
