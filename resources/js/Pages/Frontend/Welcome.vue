@@ -24,39 +24,11 @@ function handleImageError() {
     document.getElementById('docs-card-content')?.classList.add('!flex-row');
     document.getElementById('background')?.classList.add('!hidden');
 }
-
-const visit = (url) => {
-    window.location.href = url;
-}
 </script>
 
 <template>
-    <Head title="Bienvenido" />
-    
-    <div class="container" style="max-width: 100%;">
-        <div class="flex w-full h-full justify-center items-center">
-            <div class="cards">
-                <div @click.native="visit(route('dashboard'))" class="card bg-indigo-500">
-                    <p class="tip">Dashboard</p>
-                    <p class="second-text">Ingresa ahora</p>
-                </div>
-                <div @click.native="visit(route('admin.reservations.index'))" class="card bg-sky-500">
-                    <p class="tip">Reservaciones</p>
-                    <p class="second-text">Iniciar ahora</p>
-                </div>
-                <div @click.native="visit(route('admin.rooms.rooms.index'))" class="card bg-green-500">
-                    <p class="tip">Habitaciones</p>
-                    <p class="second-text">Mira el inventario</p>
-                </div>
-                <div v-if="$page.props.auth.user" @click.native="visit(route('admin.users.register'))" class="card bg-orange-500">
-                    <p class="tip">Nuevo usuario</p>
-                    <p class="second-text">Registrar nuevo usuario</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="hidden bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
+    <Head title="Welcome" />
+    <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
         <img id="background" class="absolute -left-20 top-0 max-w-[877px]" src="https://laravel.com/assets/img/welcome/background.svg" />
         <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
             <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
@@ -202,99 +174,3 @@ const visit = (url) => {
         </div>
     </div>
 </template>
-
-<style scoped>
-.container {
-  width: 100%;
-  height: 100vh;
-  --s: 84px;
-  --c1: #f2f2f2;
-  --c2: #cdcbcc;
-  --c3: #999999;
-
-  --_g: 0 120deg, #0000 0;
-  background: conic-gradient(
-      from 0deg at calc(500% / 6) calc(100% / 3),
-      var(--c3) var(--_g)
-    ),
-    conic-gradient(
-      from -120deg at calc(100% / 6) calc(100% / 3),
-      var(--c2) var(--_g)
-    ),
-    conic-gradient(
-      from 120deg at calc(100% / 3) calc(500% / 6),
-      var(--c1) var(--_g)
-    ),
-    conic-gradient(
-      from 120deg at calc(200% / 3) calc(500% / 6),
-      var(--c1) var(--_g)
-    ),
-    conic-gradient(
-      from -180deg at calc(100% / 3) 50%,
-      var(--c2) 60deg,
-      var(--c1) var(--_g)
-    ),
-    conic-gradient(
-      from 60deg at calc(200% / 3) 50%,
-      var(--c1) 60deg,
-      var(--c3) var(--_g)
-    ),
-    conic-gradient(
-      from -60deg at 50% calc(100% / 3),
-      var(--c1) 120deg,
-      var(--c2) 0 240deg,
-      var(--c3) 0
-    );
-  background-size: calc(var(--s) * 1.732) var(--s);
-}
-
-.cards {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.cards .red {
-  background-color: #f43f5e;
-}
-
-.cards .blue {
-  background-color: #3b82f6;
-}
-
-.cards .green {
-  background-color: #22c55e;
-}
-
-.cards .card {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  text-align: center;
-  height: 100px;
-  width: 250px;
-  border-radius: 10px;
-  color: white;
-  cursor: pointer;
-  transition: 400ms;
-}
-
-.cards .card p.tip {
-  font-size: 1em;
-  font-weight: 700;
-}
-
-.cards .card p.second-text {
-  font-size: .7em;
-}
-
-.cards .card:hover {
-  transform: scale(1.1, 1.1);
-}
-
-.cards:hover > .card:not(:hover) {
-  filter: blur(10px);
-  transform: scale(0.9, 0.9);
-}
-</style>

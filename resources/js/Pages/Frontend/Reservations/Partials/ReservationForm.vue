@@ -2,8 +2,9 @@
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import TextInput from '@/Components/TextInput.vue';
-import { ToastSuccess,
-            ToastWarning
+import {    ToastSuccess,
+            ToastWarning,
+            ToastInfo
  } from '@/Shared/Toast.js'
 import log from '@/Helpers/Logger.js';
 import { GetNights,
@@ -90,6 +91,7 @@ const HandleRoomTypeInput = (e) => {
         checkout: ReservationForm.checkout,
         room_type_id: e.target.value,
     })).then(response => {
+        ToastInfo('Habitaciones disponibles: ' + response.data.available);
         if(response.data.available <= 0){
             ToastWarning('No hay habitaciones disponibles para el tipo de habitación seleccionado');
         }
