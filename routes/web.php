@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 use App\Http\Controllers\Calendar\CalendarController;
+use App\Http\Controllers\Dashboard\DashboardController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -20,9 +21,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Frontend/Dashboard/IndexDashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 
     // Admin Rooms
@@ -59,7 +58,9 @@ Route::middleware([
     Route::get('/reservations/new', [App\Http\Controllers\Reservations\NewReservationController::class, 'create'])->name('admin.reservations.create');
     Route::post('/reservations/new', [App\Http\Controllers\Reservations\NewReservationController::class, 'store'])->name('admin.reservations.store');
     Route::get('/reservations/show/{reservation}', [App\Http\Controllers\Reservations\NewReservationController::class, 'show'])->name('admin.reservations.show');
-
+    #Reservations API
+    ## Arrivals
+    Route::get('/api/reservations/arrivals/', [App\Http\Controllers\Reservations\ArrivalsController::class, 'getArrivalsJson'])->name('admin.reservations.arrivals.json');
     #Calendar
     Route::get('/calendar/{from_date?}/{to_date?}', [CalendarController::class, 'index'])->name('calendar.index');
     Route::get('/calendar/{from_date?}/{to_date?}/store', [CalendarController::class, 'store'])->name('calendar.store');

@@ -15,7 +15,7 @@ class GetReservations
         $todayDate = date('Y-m-d');
         return Reservation::with([
                                 'roomType' => function($query){
-                                    $query->select('id', 'name');
+                                    $query->select('id', 'name', 'room_type');
                                 },
                                 'guests' => function($query){
                                     $query->select('id', 'name', 'lastname');

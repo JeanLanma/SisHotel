@@ -4,12 +4,11 @@ import {    FormatDate,
             FormatCurrency
 } from '@/Helpers/Reservation/Reservation.js';
 import { ref } from 'vue';
-
 const props = defineProps({
     UpcomingReservations: Object,
 });
 const UpcomingReservations = ref(props.UpcomingReservations.data);
-// Logger('UpcomingReservationsList:Arrivals', props.UpcomingReservations);
+// Logger('TodayReservationsList:Arrivals', props.UpcomingReservations);
 </script>
 <template>
 <!-- Tabla -->
@@ -18,7 +17,7 @@ const UpcomingReservations = ref(props.UpcomingReservations.data);
         <thead>
             <tr>
                 <th class="px-4 py-2 text-left border-b-2 w-full">
-                    <h2 class="text-ml font-bold text-gray-600">Proximas llegadas: {{ props.UpcomingReservations.total }}</h2>
+                    <h2 class="text-ml font-bold text-gray-600">Llegadas de hoy: {{ props.UpcomingReservations.total }}</h2>
                 </th>
             </tr>
         </thead>

@@ -33,7 +33,7 @@ Logger('Upcoming Reservations List', props.UpcomingReservations);
                             </div>
                         </h2>
                         <div class="flex">
-                            {{ reservation.room_type.name }}
+                            {{ `${reservation.room_type.room_type} - ${reservation.room_type.name}` }}
                             
                         </div>
                     </a>
