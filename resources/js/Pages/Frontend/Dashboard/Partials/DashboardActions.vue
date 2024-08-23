@@ -16,7 +16,7 @@ const props = defineProps({
         <div class="flex justify-center items-center space-x-5 h-full">
             <div>
                 <p>Proximas llegadas</p>
-                <h2 class="text-4xl font-bold text-gray-600">{{ props.UpcomingReservations?.length ?? 'No disponibles' }}</h2>
+                <h2 class="text-4xl font-bold text-gray-600">{{ props.UpcomingReservations.total ?? 'No disponibles' }}</h2>
                 <p>{{ currentTime }}</p>
             </div>
             <!-- <img src="https://www.emprenderconactitud.com/img/Wallet.png" alt="wallet" class="h-24 md:h-20 w-38"> -->

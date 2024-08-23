@@ -27,7 +27,7 @@ const RoomCount = ref({
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     
-                <DashboardActions :UpcomingReservations="props.Arrivals.upcoming" :RoomCount="RoomCount" />
+                <DashboardActions :UpcomingReservations="props.Arrivals.today" :RoomCount="RoomCount" />
 
                 <div class="flex">
 
@@ -35,7 +35,7 @@ const RoomCount = ref({
                         <TodayArrivalList :UpcomingReservations="props.Arrivals.today" />
                     </div>
                     <div>
-                        <UpcomingArrivalsList :UpcomingReservations="props.Arrivals.today" />
+                        <UpcomingArrivalsList :UpcomingReservations="props.Arrivals.upcoming" />
                     </div>
                 
                 </div>

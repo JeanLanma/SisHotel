@@ -1,9 +1,12 @@
 <script setup>
 import { ref } from 'vue';
+import { Link } from '@inertiajs/vue3';
 import { ToastSuccess } from '@/Shared/Toast.js'
 import {
         FormatDateToHuman,
-        FormatCurrency
+        FormatCurrency,
+        IsCheckInToday,
+        IsCheckOutToday
     } from '@/Helpers/Reservation/Reservation.js';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import ShowReservationForm from '@/Pages/Frontend/Reservations/Partials/ShowReservationForm.vue';
@@ -25,10 +28,19 @@ const RoomTypes = ref(props.RoomTypes.data);
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 
-                <div class="">
-                    <button class="w-full py-2 px-4 bg-sky-500 text-white hover:bg-sky-600 hover:shadow-md transition-all duration-200 font-medium rounded-md mb-4">
-                        Hacer Checkin ahora
-                    </button>
+                <div v-if="IsCheckInToday(props.Reservation.checkin)">
+                    <Link :href="route('admin.rooms.rooms.index')">
+                        <button class="w-full py-2 px-4 bg-amber-500 text-white hover:bg-sky-600 hover:shadow-md transition-all duration-200 font-medium rounded-md mb-4">
+                            Hacer Checkin ahora
+                        </button>
+                    </Link>
+                </div>
+                <div v-if="IsCheckOutToday(props.Reservation.checkout)">
+                    <Link :href="route('admin.rooms.rooms.index')">
+                        <button class="w-full py-2 px-4 bg-amber-500 text-white hover:bg-amber-600 hover:shadow-md transition-all duration-200 font-medium rounded-md mb-4">
+                            Hacer Checkout ahora
+                        </button>
+                    </Link>
                 </div>
 
                 <div class="flex">

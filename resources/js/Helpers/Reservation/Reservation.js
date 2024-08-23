@@ -41,7 +41,16 @@ const GetNights = (checkIn, checkOut) => {
     const nights = timeDifference / (1000 * 3600 * 24);
     return nights;
 };
-
+const IsCheckInToday = (checkIn) => {
+    const checkInDate = new Date(checkIn);
+    const today = new Date();
+    return checkInDate.getDate() === today.getDate();
+};
+const IsCheckOutToday = (checkOut) => {
+    const checkOutDate = new Date(checkOut);
+    const today = new Date();
+    return checkOutDate.getDate() === today.getDate();
+};
 const GetTotalPrice = (price, nights, rooms) => {
     return (price * nights) * rooms;
 };
@@ -57,4 +66,6 @@ export {
     FormatDate,
     FormatDateToHuman,
     FormatCurrency,
+    IsCheckInToday,
+    IsCheckOutToday
 };
