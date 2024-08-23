@@ -1,5 +1,17 @@
 //# String formats
 
+// Pluralize a word
+const Pluralize = (word, count) => {
+    const dictionary = {
+        'habitación': 'habitaciones',
+        'habitacion': 'habitaciones',
+        'adulto': 'adultos',
+        'niño': 'niños',
+    };
+
+    return count > 1 ? `${word}s` : word;
+};
+
 // Dates
 const FormatDate = (date) => {
     const d = new Date(date);
@@ -79,5 +91,6 @@ export {
     FormatToDateHumanShort,
     FormatCurrency,
     IsCheckInToday,
-    IsCheckOutToday
+    IsCheckOutToday,
+    Pluralize
 };

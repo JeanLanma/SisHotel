@@ -4,11 +4,15 @@ const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
     iconColor: 'white',
+    didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+    },
     customClass: {
       popup: 'colored-toast',
     },
-    showConfirmButton: false,
-    timer: 2000,
+    showConfirmButton: true,
+    timer: 3000,
     timerProgressBar: true,
 });
 

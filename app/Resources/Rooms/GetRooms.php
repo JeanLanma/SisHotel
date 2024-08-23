@@ -50,7 +50,7 @@ class GetRooms {
                                                     ->where('checkout', '>', $checkin);
                                         });
                                     })
-                                    ->count();
+                                    ->count();   
         $RoomsCount = Room::where('room_type_id', $room_type_id)->count();
         $response['total'] = $RoomsCount;
         $response['available'] = $RoomsCount - $response['reserved'];
