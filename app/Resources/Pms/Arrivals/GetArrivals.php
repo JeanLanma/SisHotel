@@ -12,10 +12,13 @@ class GetArrivals {
 
     public static function GetDashboard()
     {
+        // Variables
         $Dashboard = [];
-        $Dashboard['today'] = self::GetTodayArrivals();
         $tomorrowDate = Carbon::now()->addDay()->format('Y-m-d');
+        //
+        $Dashboard['today'] = self::GetTodayArrivals();
         $Dashboard['upcoming'] = self::GetArrivalsByDate($tomorrowDate);
+        $Dashboard['departures'] = self::GetTodayDepartures();
         $Dashboard['occupied_rooms'] = Room::where('status', 'occupied')->count();
         $Dashboard['available_rooms'] = Room::where('status', 'available')->count();
 
@@ -25,6 +28,11 @@ class GetArrivals {
     {
         $todayDate = date('Y-m-d');
         return self::GetArrivalsByDate($todayDate, $limit);
+    }
+    public static function GetTodayDepartures($limit = 100)
+    {
+        $todayDate = date('Y-m-d');
+        return self::GetDeparturesByDate($todayDate, $limit);
     }
     public static function GetArrivalsByDate($date, $limit = 100)
     {
@@ -39,6 +47,20 @@ class GetArrivals {
                                     $query->select('id', 'name');
                                 },
                             ])->where('checkin', $date)->orderBy('checkin', 'asc')->paginate($limit);
+    }
+    public static function GetDeparturesByDate($date, $limit = 100)
+    {
+        return Reservation::with([
+                                'roomType' => function($query){
+                                    $query->select('id', 'name', 'room_type');
+                                },
+                                'guests' => function($query){
+                                    $query->select('id', 'name', 'lastname');
+                                },
+                                'user' => function($query){
+                                    $query->select('id', 'name');
+                                },
+                            ])->where('checkout', $date)->orderBy('checkout', 'asc')->paginate($limit);
     }
     public static function getArrivalsByPeriod($checkin, $checkout, $limit = 100)
     {

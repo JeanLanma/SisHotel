@@ -1,0 +1,1 @@
+const e={AVAILABLE:"available",OCCUPIED:"occupied",UNAVAILABLE:"unavailable",MAINTENANCE:"maintenance"},n=a=>({available:"bg-green-200",unavailable:"bg-red-200",maintenance:"bg-yellow-100"})[a]??"bg-white text-gray-500",l=a=>({available:"Disponible",occupied:"Ocupada",unavailable:"No disponible",maintenance:"Mantenimiento"})[a]??"Desconocido";export{l as R,e as a,n as b};
