@@ -4,14 +4,17 @@ import Logger from '@/Helpers/Logger';
 import { ref } from 'vue';
 import {
             FormatToDateHumanShort,
-            IsCheckInToday,
             IsCheckOutToday,
-            Pluralize
+            FormatCurrency,
+            IsCheckInToday,
+            Pluralize,
+            GetNights,
         } from '@/Helpers/Reservation/Reservation';
 import { 
             ToastWarning,
             ToastSuccess    
         } from '@/Shared/Toast';
+import axios from 'axios';
 
 const props = defineProps({
     Reservation: Object,
@@ -23,6 +26,7 @@ const checkedRooms = ref([]);
 if(Reservation.value.room_id){
     checkedRooms.value.push(Reservation.value.room_id);
 }
+Reservation.value.nights = GetNights(Reservation.value.checkin, Reservation.value.checkout);
 const handleCheckin = () => {
     if(checkedRooms.value.length == 0){
         ToastWarning('Selecciona al menos una habitación');
@@ -32,7 +36,15 @@ const handleCheckin = () => {
         ToastWarning('Selecciona el número de habitaciones correcto');
         return;
     }
-    ToastSuccess('Habitaciones seleccionadas!');
+    axios.post(route('admin.reservations.arrivals.checkin', Reservation.value.id), {
+        rooms: checkedRooms.value,
+    }).then((response) => {
+        ToastSuccess('Checkin realizado');
+        Logger('CheckinIndex:RESPONSE:43', response.data);
+    }).catch((error) => {
+        Logger('CheckinIndex:ERROR:45', error);
+        ToastWarning('Error al realizar el checkin');
+    });
     // Logger('CheckinIndex:CheckedRoom:17', {
     //     data: checkedRooms.value,
     //     checked: checkedRooms.value.length,
@@ -56,7 +68,7 @@ Logger('CheckinIndex:Rooms:18', props.AvailableRooms);
             
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     
-                <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl m-5">
+                <div class="max-w-lg mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-3xl m-5">
                     <div class="p-8 flex items-center">
                         <div class="pr-4">
                             <p v-if="IsCheckInToday(Reservation.checkin)" class="text-4xl font-bold">CI</p>
@@ -65,11 +77,15 @@ Logger('CheckinIndex:Rooms:18', props.AvailableRooms);
                         </div>
                         <div>
                         <!-- <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">23 de Noviembre, 2023</div> -->
-                        <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{{ FormatToDateHumanShort(props.Reservation.checkin) }} {{ Pluralize('habitación', Reservation.rooms) }}</div>
-                        <p class="mt-2 text-gray-500 text-sm">{{ FormatToDateHumanShort(props.Reservation.checkin) }} - {{ FormatToDateHumanShort(props.Reservation.checkout) }}</p>
+                        <div class="uppercase tracking-wide text-indigo-500 font-semibold text-lg">
+                            {{ FormatToDateHumanShort(props.Reservation.checkin) }}, 
+                            <span class="font-bold text-indigo-400 text-base">{{ `${Reservation.nights} ${Pluralize('noche',Reservation.nights)} - ${Reservation.rooms} ${Pluralize('habitación', Reservation.rooms)} ${Reservation.room_type.name} (${Reservation.room_type.room_type})` }}</span>
+                        </div>
+                        <p class="mt-2 text-gray-500">{{ FormatToDateHumanShort(props.Reservation.checkin) }} - {{ FormatToDateHumanShort(props.Reservation.checkout) }}</p>
                         <p class="mt-2 text-gray-500">
                             <p>A nombre de: {{ Reservation.guests.full_name }} </p>
-                            <p>{{ Reservation.adults }} Adultos<p v-if="Reservation.kids > 0">,{{ Reservation.kids }} </p></p>
+                            <p>{{ Reservation.adults }} {{ Pluralize('adulto', Reservation.adults) }}<span v-if="Reservation.kids > 0">, {{ Pluralize('niño', Reservation.kids) }} {{ Reservation.kids }} </span></p>
+                            <p class="mt-2 text-lg text-gray-600"> Total: <span class="font-semibold">{{ FormatCurrency(Reservation.total) }}</span></p>
                         </p>
                         </div>
                     </div>
@@ -93,9 +109,9 @@ Logger('CheckinIndex:Rooms:18', props.AvailableRooms);
                         </label>
                     </div>
                 </div>
-                <div class="md:max-w-2xl mx-auto">
+                <div class="md:max-w-3xl mx-auto">
                     <button @click.native="handleCheckin" class="w-full py-2 px-4 bg-sky-500 text-white hover:bg-sky-600 hover:shadow-md transition-all duration-200 font-medium rounded-md mb-4">
-                        Hacer Checkin ahora
+                        Hacer checkin ahora
                     </button>
                 </div>
 

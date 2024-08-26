@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Arrivals;
 
 use App\Http\Controllers\Controller;
+use App\Models\Reservation\Reservation;
+use App\Resources\Pms\Arrivals\ReservationCheck;
 use App\Resources\Reservations\GetReservations;
 use App\Resources\Rooms\GetRooms;
 use Illuminate\Http\Request;
@@ -17,5 +19,10 @@ class ArrivalsController extends Controller
             'Reservation' => $reservation,
             'AvailableRooms' => $availableRooms
         ]);
+    }
+    public function makeCheckin(Request $request,Reservation $reservation)
+    {
+        $Checkin = ReservationCheck::In($reservation, $request->rooms);
+        return response()->json($Checkin);
     }
 }

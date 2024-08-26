@@ -210,7 +210,7 @@ const HandleRoomTypeInput = (e) => {
     </div>
 
     <div class="mt-6">
-        <button @click="saveReservation" type="button" class="py-2 px-4 bg-indigo-500 text-white hover:bg-indigo-600 transition-all duration-200 font-medium rounded-md">
+        <button @click="saveReservation" type="button" class="py-2 px-4 bg-indigo-500 text-white hover:bg-indigo-600 transition-all duration-200 font-medium rounded-md" :disabled="ReservationForm.processing" :class="{ 'opacity-25' : ReservationForm.processing }">
             Guardar
         </button>
     </div>

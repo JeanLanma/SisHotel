@@ -7,6 +7,8 @@ const Pluralize = (word, count) => {
         'habitacion': 'habitaciones',
         'adulto': 'adultos',
         'niño': 'niños',
+        'nino': 'niños',
+        'noche': 'noches',
     };
 
     return count > 1 ? `${word}s` : word;

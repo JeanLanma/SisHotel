@@ -66,6 +66,7 @@ Route::middleware([
     Route::get('/calendar/{from_date?}/{to_date?}/store', [CalendarController::class, 'store'])->name('calendar.store');
     #Checkin
     Route::get('reservations/arrivals/checkin/{reservation}', [App\Http\Controllers\Arrivals\ArrivalsController::class, 'checkin'])->name('admin.reservations.arrivals.checkin');
+    Route::post('reservations/arrivals/checkin/{reservation}', [App\Http\Controllers\Arrivals\ArrivalsController::class, 'makeCheckin'])->name('admin.reservations.arrivals.checkin.make');
     #Users
     Route::get('/admin/users/register', [App\Http\Controllers\Admin\Users\RegisterUserController::class, 'index'])->name('admin.users.register');
     Route::post('/admin/users/register', [App\Http\Controllers\Admin\Users\RegisterUserController::class, 'store'])->name('admin.users.register.store');
