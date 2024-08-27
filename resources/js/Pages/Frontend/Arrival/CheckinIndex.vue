@@ -52,6 +52,17 @@ const handleCheckin = () => {
     //     isGreaterThan: (checkedRooms.value.length > Reservation.rooms),
     // });
 }
+const handleCheckout = () => {
+    axios.post(route('admin.reservations.arrivals.checkout', Reservation.value.id), {
+        rooms: checkedRooms.value,
+    }).then((response) => {
+        ToastSuccess('Checkout realizado con exito');
+        Logger('CheckinIndex:RESPONSE:43', response.data);
+    }).catch((error) => {
+        Logger('CheckinIndex:ERROR:45', error);
+        ToastWarning('Error al realizar el checkout, si el error persiste contacta al administrador');
+    });
+}
 Logger('CheckinIndex:Arrival:17', props.Reservation);
 Logger('CheckinIndex:Rooms:18', props.AvailableRooms);
 </script>
@@ -72,16 +83,19 @@ Logger('CheckinIndex:Rooms:18', props.AvailableRooms);
                     <div class="p-8 flex items-center">
                         <div class="pr-4">
                             <p v-if="IsCheckInToday(Reservation.checkin)" class="text-4xl font-bold">CI</p>
-                            <p v-else class="tesxt-4xl font-bold">RE</p>
                             <p v-if="IsCheckOutToday(Reservation.checkout)" class="text-4xl font-bold">CO</p>
                         </div>
                         <div>
                         <!-- <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">23 de Noviembre, 2023</div> -->
                         <div class="uppercase tracking-wide text-indigo-500 font-semibold text-lg">
-                            {{ FormatToDateHumanShort(props.Reservation.checkin) }}, 
+                            <template v-if="IsCheckInToday(Reservation.checkin)">{{ FormatToDateHumanShort(props.Reservation.checkin) }}</template>
+                            <template v-else>{{ FormatToDateHumanShort(props.Reservation.checkout) }}</template>, 
                             <span class="font-bold text-indigo-400 text-base">{{ `${Reservation.nights} ${Pluralize('noche',Reservation.nights)} - ${Reservation.rooms} ${Pluralize('habitación', Reservation.rooms)} ${Reservation.room_type.name} (${Reservation.room_type.room_type})` }}</span>
                         </div>
-                        <p class="mt-2 text-gray-500">{{ FormatToDateHumanShort(props.Reservation.checkin) }} - {{ FormatToDateHumanShort(props.Reservation.checkout) }}</p>
+                        <p class="mt-2 text-gray-500">
+                            <span :class="{ 'font-bold text-gray-700': IsCheckInToday(Reservation.checkin)}">{{ FormatToDateHumanShort(props.Reservation.checkin) }}</span> - 
+                            <span :class="{ 'font-bold text-gray-700': IsCheckOutToday(Reservation.checkout)}">{{ FormatToDateHumanShort(props.Reservation.checkout) }}</span>
+                        </p>
                         <p class="mt-2 text-gray-500">
                             <p>A nombre de: {{ Reservation.guests.full_name }} </p>
                             <p>{{ Reservation.adults }} {{ Pluralize('adulto', Reservation.adults) }}<span v-if="Reservation.kids > 0">, {{ Pluralize('niño', Reservation.kids) }} {{ Reservation.kids }} </span></p>
@@ -110,8 +124,11 @@ Logger('CheckinIndex:Rooms:18', props.AvailableRooms);
                     </div>
                 </div>
                 <div class="md:max-w-3xl mx-auto">
-                    <button @click.native="handleCheckin" class="w-full py-2 px-4 bg-sky-500 text-white hover:bg-sky-600 hover:shadow-md transition-all duration-200 font-medium rounded-md mb-4">
+                    <button v-if="IsCheckInToday(Reservation.checkin) && Reservation.status == 'pending'" @click.native="handleCheckin" class="w-full py-2 px-4 bg-sky-500 text-white hover:bg-sky-600 hover:shadow-md transition-all duration-200 font-medium rounded-md mb-4">
                         Hacer checkin ahora
+                    </button>
+                    <button v-else-if="IsCheckOutToday(Reservation.checkout) && Reservation.status == 'checkedin'" @click.native="handleCheckout" class="w-full py-2 px-4 bg-amber-500 text-white hover:bg-amber-600 hover:shadow-md transition-all duration-200 font-medium rounded-md mb-4">
+                        Hacer checkout ahora
                     </button>
                 </div>
 

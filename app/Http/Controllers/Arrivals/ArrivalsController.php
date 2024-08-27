@@ -25,4 +25,10 @@ class ArrivalsController extends Controller
         $Checkin = ReservationCheck::In($reservation, $request->rooms);
         return response()->json($Checkin);
     }
+    public function makeCheckout(Request $request,Reservation $reservation)
+    {
+        $Checkout = ReservationCheck::Out($reservation);
+        return response()->json($Checkout);
+        return response()->json($Checkout);
+    }
 }

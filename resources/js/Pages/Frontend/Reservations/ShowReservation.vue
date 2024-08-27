@@ -36,7 +36,7 @@ const RoomTypes = ref(props.RoomTypes.data);
                     </Link>
                 </div>
                 <div v-if="IsCheckOutToday(props.Reservation.checkout)">
-                    <Link :href="route('admin.rooms.rooms.index')">
+                    <Link :href="route('admin.reservations.arrivals.checkin',  {reservation: props.Reservation.id})">
                         <button class="w-full py-2 px-4 bg-amber-500 text-white hover:bg-amber-600 hover:shadow-md transition-all duration-200 font-medium rounded-md mb-4">
                             Hacer Checkout ahora
                         </button>

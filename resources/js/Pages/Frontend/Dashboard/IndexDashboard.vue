@@ -2,6 +2,7 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import UpcomingArrivalsList from '@/Pages/Frontend/Dashboard/Partials/UpcomingArrivalsList.vue';
 import TodayArrivalList from '@/Pages/Frontend/Dashboard/Partials/TodayArrivalsList.vue';
+import TodayDeparturesList from '@/Pages/Frontend/Dashboard/Partials/TodayDeparturesList.vue';
 import DashboardActions from '@/Pages/Frontend/Dashboard/Partials/DashboardActions.vue';
 import Logger from '@/Helpers/Logger';
 import { ref } from 'vue';
@@ -29,14 +30,18 @@ const RoomCount = ref({
                     
                 <DashboardActions :UpcomingReservations="props.Arrivals.today" :RoomCount="RoomCount" />
 
-                <div class="flex">
+                <div class="grid grid-cols-2">
 
                     <div class="mr-2">
-                        <TodayArrivalList :UpcomingReservations="props.Arrivals.today" />
+                        <TodayArrivalList v-if="props.Arrivals.today.data?.length > 0" :UpcomingReservations="props.Arrivals.today" />
                     </div>
                     <div>
                         <UpcomingArrivalsList :UpcomingReservations="props.Arrivals.upcoming" />
                     </div>
+                    <div v-if="props.Arrivals.departures.data?.length > 0" class="col-span-2">
+                        <TodayDeparturesList :UpcomingReservations="props.Arrivals.departures" />
+                    </div>
+
                 
                 </div>
 

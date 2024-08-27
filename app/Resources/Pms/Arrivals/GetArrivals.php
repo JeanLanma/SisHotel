@@ -46,7 +46,9 @@ class GetArrivals {
                                 'user' => function($query){
                                     $query->select('id', 'name');
                                 },
-                            ])->where('checkin', $date)->orderBy('checkin', 'asc')->paginate($limit);
+                            ])
+                            ->where('status', 'pending')
+                            ->where('checkin', $date)->orderBy('checkin', 'asc')->paginate($limit);
     }
     public static function GetDeparturesByDate($date, $limit = 100)
     {
@@ -60,7 +62,9 @@ class GetArrivals {
                                 'user' => function($query){
                                     $query->select('id', 'name');
                                 },
-                            ])->where('checkout', $date)->orderBy('checkout', 'asc')->paginate($limit);
+                            ])->where('checkout', $date)
+                            ->whereNot('status', 'checkedout')
+                            ->orderBy('checkout', 'asc')->paginate($limit);
     }
     public static function getArrivalsByPeriod($checkin, $checkout, $limit = 100)
     {

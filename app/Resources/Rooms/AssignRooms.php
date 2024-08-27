@@ -39,8 +39,11 @@ class AssignRooms {
         return $_rooms;
     }
 
-    public function Unassign($reservation)
+    public static function Unassign($reservation)
     {
-        return AssignedRoom::where('reservation_id', $reservation->id)->delete();
+        return AssignedRoom::where('reservation_id', $reservation->id)->update([
+            'status' => 'unassigned',
+            'departure_time' => now()
+        ]);
     }
 }

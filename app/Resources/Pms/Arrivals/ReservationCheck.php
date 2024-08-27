@@ -53,6 +53,41 @@ class ReservationCheck {
         $room->save();
         return $room;
     }
-    public static function Out(){}
+    /**
+     * Checkout a reservation
+     * @param Reservation $reservation
+     * @param mixed Room|Rooms[] $rooms
+     * @return array|false
+     */
+    public static function Out(Reservation $reservation)
+    {
+        $_rooms = [];
+        $_assigned = [];
+        foreach ($reservation->assignedRoom as $assigned) {
+            $_rooms[] = self::UpdateRoom($assigned->room_id, [
+                'status' => 'maintenance',
+                'pax' => 0
+            ]);
+        }
+
+        $_assigned = AssignRooms::Unassign($reservation);
+
+        $reservation->room_id = null;
+        $reservation->status = 'checkedout';
+        $reservation->save();
+        return  [
+            'reservation' => $reservation,
+            'rooms' => $_rooms,
+            'assigned' => $_assigned
+        ];
+    }
+    public static function UpdateRoom($room_id, $params)
+    {
+        $room = Room::where(['id' => $room_id])->update($params);
+        // Sanitize the params
+        $params = array_filter($params);
+    
+        return $room;
+    }
 
 }
