@@ -2,13 +2,39 @@
 import { ref } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import ReservationForm from '@/Pages/Frontend/Reservations/Partials/ReservationForm.vue';
+import ConfirmationModal from '@/Components/ConfirmationModal.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
+import DangerButton from '@/Components/DangerButton.vue';
 const props = defineProps({
     RoomTypes: Object,
 });
 const RoomTypes = ref(props.RoomTypes.data);
+// Rooms Available modal
+const ShowingRoomAvailabilityModal = ref(true);
 </script>
 
 <template>
+        <!-- Modal -->
+    <ConfirmationModal :show="ShowingRoomAvailabilityModal" @close="ShowingRoomAvailabilityModal = false">
+        <template #title>
+            Delete Account
+        </template>
+
+        <template #content>
+            Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted.
+        </template>
+
+        <template #footer>
+            <SecondaryButton @click.native="ShowingRoomAvailabilityModal = false">
+                Nevermind
+            </SecondaryButton>
+
+            <DangerButton class="ml-2" @click.native="ShowingRoomAvailabilityModal = false">
+                Delete Account
+            </DangerButton>
+        </template>
+    </ConfirmationModal>
+    <!-- /Modal -->
     <AppLayout title="Nueva reservación">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">

@@ -124,12 +124,15 @@ Logger('CheckinIndex:Rooms:18', props.AvailableRooms);
                     </div>
                 </div>
                 <div class="md:max-w-3xl mx-auto">
-                    <button v-if="IsCheckInToday(Reservation.checkin) && Reservation.status == 'pending'" @click.native="handleCheckin" class="w-full py-2 px-4 bg-sky-500 text-white hover:bg-sky-600 hover:shadow-md transition-all duration-200 font-medium rounded-md mb-4">
+                    <button v-if="IsCheckInToday(Reservation.checkin) || Reservation.status == 'pending'" @click.native="handleCheckin" class="w-full py-2 px-4 bg-sky-500 text-white hover:bg-sky-600 hover:shadow-md transition-all duration-200 font-medium rounded-md mb-4">
                         Hacer checkin ahora
                     </button>
                     <button v-else-if="IsCheckOutToday(Reservation.checkout) && Reservation.status == 'checkedin'" @click.native="handleCheckout" class="w-full py-2 px-4 bg-amber-500 text-white hover:bg-amber-600 hover:shadow-md transition-all duration-200 font-medium rounded-md mb-4">
                         Hacer checkout ahora
                     </button>
+                    <!-- <button v-else="IsCheckOutToday(Reservation.checkout) && Reservation.status == 'checkedin'" class="w-full py-2 px-4 bg-amber-500 text-white hover:bg-amber-600 hover:shadow-md transition-all duration-200 font-medium rounded-md mb-4">
+                        Hacer checkout ahora
+                    </button> -->
                 </div>
 
             </div>

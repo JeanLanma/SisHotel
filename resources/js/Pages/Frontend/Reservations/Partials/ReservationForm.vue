@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import TextInput from '@/Components/TextInput.vue';
+
 import {    ToastSuccess,
             ToastWarning,
             ToastInfo
@@ -13,6 +14,7 @@ import { GetNights,
  } from '@/Helpers/Reservation/Reservation';
 import { RoomStatusLabel } from '@/Helpers/Rooms/RoomEnums';
 import axios from 'axios';
+import Logger from '@/Helpers/Logger.js';
 
 const props = defineProps({
     RoomTypes: Object,
@@ -111,9 +113,15 @@ const HandleRoomTypeInput = (e) => {
     });
 
 }
+
+// Rooms Available modal
+const ShowingRoomAvailabilityModal = ref(true);
+Logger('ShowingRoomAvailabilityModal', ShowingRoomAvailabilityModal.value);
 </script>
 
 <template>
+
+
     <form >
     <!-- Reserva -->
     <div>
